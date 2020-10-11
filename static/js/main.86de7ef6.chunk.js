@@ -1,2 +1,0 @@
-(this["webpackJsonpinsuline-calculator"]=this["webpackJsonpinsuline-calculator"]||[]).push([[0],{3:function(n,e,t){n.exports=t(8)},8:function(n,e,t){"use strict";t.r(e);var r=t(0),c=t.n(r),l=t(2);function u(){return c.a.createElement("div",null,"working!!")}t.n(l).a.render(c.a.createElement(u,null),document.getElementById("root"))}},[[3,1,2]]]);
-//# sourceMappingURL=main.86de7ef6.chunk.js.map
