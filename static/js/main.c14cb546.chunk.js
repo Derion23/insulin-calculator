@@ -1,0 +1,2 @@
+(this["webpackJsonpinsuline-calculator"]=this["webpackJsonpinsuline-calculator"]||[]).push([[0],{3:function(n,e,t){n.exports=t(9)},8:function(n,e,t){},9:function(n,e,t){"use strict";t.r(e);var l=t(0),u=t.n(l),a=t(2),c=t.n(a);t(8);function r(){return u.a.createElement("div",null,u.a.createElement("h1",null,"Insuline Calculator"))}c.a.render(u.a.createElement(r,null),document.getElementById("root"))}},[[3,1,2]]]);
+//# sourceMappingURL=main.c14cb546.chunk.js.map
