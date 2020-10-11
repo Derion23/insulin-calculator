@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "807c0a16b93a789cf108be7bf2cae295",
+    "revision": "9e77780388befc374cd43f129e555b73",
     "url": "/insuline-calculator/index.html"
   },
   {
