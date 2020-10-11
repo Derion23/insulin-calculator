@@ -1,19 +1,22 @@
 {
   "files": {
-    "main.js": "/insuline-calculator/static/js/main.eb60f706.chunk.js",
-    "main.js.map": "/insuline-calculator/static/js/main.eb60f706.chunk.js.map",
+    "main.css": "/insuline-calculator/static/css/main.50cfe383.chunk.css",
+    "main.js": "/insuline-calculator/static/js/main.c14cb546.chunk.js",
+    "main.js.map": "/insuline-calculator/static/js/main.c14cb546.chunk.js.map",
     "runtime-main.js": "/insuline-calculator/static/js/runtime-main.34e80a8b.js",
     "runtime-main.js.map": "/insuline-calculator/static/js/runtime-main.34e80a8b.js.map",
     "static/js/2.4059f625.chunk.js": "/insuline-calculator/static/js/2.4059f625.chunk.js",
     "static/js/2.4059f625.chunk.js.map": "/insuline-calculator/static/js/2.4059f625.chunk.js.map",
     "index.html": "/insuline-calculator/index.html",
-    "precache-manifest.f1b93775587cf13b1e93efa47f07d135.js": "/insuline-calculator/precache-manifest.f1b93775587cf13b1e93efa47f07d135.js",
+    "precache-manifest.082439ef69e2d0a2a77f68ceaf87c8e3.js": "/insuline-calculator/precache-manifest.082439ef69e2d0a2a77f68ceaf87c8e3.js",
     "service-worker.js": "/insuline-calculator/service-worker.js",
+    "static/css/main.50cfe383.chunk.css.map": "/insuline-calculator/static/css/main.50cfe383.chunk.css.map",
     "static/js/2.4059f625.chunk.js.LICENSE.txt": "/insuline-calculator/static/js/2.4059f625.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.34e80a8b.js",
     "static/js/2.4059f625.chunk.js",
-    "static/js/main.eb60f706.chunk.js"
+    "static/css/main.50cfe383.chunk.css",
+    "static/js/main.c14cb546.chunk.js"
   ]
 }

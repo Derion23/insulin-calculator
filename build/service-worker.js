@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/insuline-calculator/precache-manifest.f1b93775587cf13b1e93efa47f07d135.js"
+  "/insuline-calculator/precache-manifest.082439ef69e2d0a2a77f68ceaf87c8e3.js"
 );
 
 self.addEventListener('message', (event) => {
