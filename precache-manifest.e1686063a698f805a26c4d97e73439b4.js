@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "a355293e1bcf55e650cdb0807c335344",
+    "revision": "28bafc9ca360c2e0f65067fba87f9c2b",
     "url": "/insuline-calculator/index.html"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/insuline-calculator/static/js/2.4059f625.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "33014186a6511cfbfa56",
-    "url": "/insuline-calculator/static/js/main.201be28f.chunk.js"
+    "revision": "3dd6d19fde6375fe927d",
+    "url": "/insuline-calculator/static/js/main.86de7ef6.chunk.js"
   },
   {
     "revision": "8cf65afbf204839c20cc",
