@@ -1,8 +1,8 @@
 {
-  "name": "insuline-calculator",
+  "name": "insulin-calculator",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://derion23.github.io/insuline-calculator",
+  "homepage": "https://derion23.github.io/insulin-calculator",
   "devDependencies": {
     "gh-pages": "^3.1.0"
   },
