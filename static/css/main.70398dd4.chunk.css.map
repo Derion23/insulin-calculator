@@ -1,0 +1,1 @@
+{"version":3,"sources":["style.css"],"names":[],"mappings":"AAIA,GACI,iBACJ,CAEA,yBACI,oBACJ","file":"main.70398dd4.chunk.css","sourcesContent":["body{\r\n\r\n}\r\n\r\nh1{\r\n    text-align: center;\r\n}\r\n\r\nh1, h3, label, button, input{\r\n    font-style: helvetica;\r\n}"]}
