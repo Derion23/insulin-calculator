@@ -3,6 +3,9 @@ body{
 }
 
 h1{
-    font-style: sans-serif;
     text-align: center;
+}
+
+h1, h3, label, button, input{
+    font-style: helvetica;
 }
