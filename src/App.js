@@ -74,7 +74,7 @@ export default function App() {
                 return 0
             }
 
-            return (foodItem.grams * (foodItem.carbohydratesPer100Grams / 100)) / 10
+            return (toNumberFormat(foodItem.grams) * (toNumberFormat(foodItem.carbohydratesPer100Grams) / 100)) / 10
         }
 
         function calculateCorrectionInsuline(bloodSugar, targetBloodSugar, correctionFactor){
