@@ -3,8 +3,9 @@
 }
 
 :root{
-    --cell-size: 30px;
+    --cell-size: 45px;
     --mark-size: calc(var(--cell-size) * .9);
+    --input-font-size: 1.15rem
 }
 
 body{
@@ -23,7 +24,14 @@ input{
     width: 85%;
     margin-right: 5px;
     margin-bottom: 3px;
-    font-size: 1.1rem;
+    font-size: var(--input-font-size);
+    font-weight: bold;
+    /* border: 1px solid rgba(0, 0, 0, 0.1) */
+}
+
+label{
+    font-size: calc(var(--input-font-size) * 0.5);
+    color: grey;
 }
 
 .output{
@@ -32,14 +40,54 @@ input{
 }
 
 .calculateIE-button{
-    font-size: 1.1rem;
-    padding: 2px, 5px;
+    font-size: calc(var(--input-font-size) * 1.2);
+    padding: 10px;
     border: 1px solid black;
     border-radius: 3px;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.calculateIE-button:active{
+    background-color: rgb(211, 210, 210);
+}
+
+.delete-food-item-button{
+    margin: 0;
+    float: right;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1rem;
+}
+
+
+.delete-food-item-button::before
+.delete-food-item-button::after{
+    content:"";
+    background-color: black;
+    
+    width: 2px;
+    height: 15px;
+}
+
+.delete-food-item-button::before{
+    transform: rotate(45deg);
+}
+
+.delete-food-item-button::after{
+    transform: rotate(-45deg);
 }
 
 .add-new-food-item-button{
-    margin: 0;
+    margin-top: calc(0.6 * var(--cell-size));
     position: relative;
     top: 50%;
     left: 50%;
@@ -63,8 +111,8 @@ button:focus{
     content:"";
     background-color: black;
     position: absolute;
-    width: 2px;
-    height: 15px;
+    width: calc(var(--mark-size) * 0.095);
+    height: calc(var(--mark-size) * 0.8);
 }
 
 .add-new-food-item-button::after{

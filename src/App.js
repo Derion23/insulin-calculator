@@ -103,6 +103,7 @@ export default function App() {
         IE = Math.round(IE * 10) / 10
 
         setTotalIE(IE)
+        window.scrollTo(0, 0)   
     }
     
     return (

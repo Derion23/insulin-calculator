@@ -1,7 +1,6 @@
 import React from 'react'
 
 import '../css/style.css'
-import '../css/foodItem.css'
 import Input from './Input'
 
 export default function FoodItem({id, name='', grams='', carbohydratesPer100Grams ='', handleChange, deleteFoodItem}) {
