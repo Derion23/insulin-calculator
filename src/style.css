@@ -1,3 +1,7 @@
+*, *::before, *::after{
+    box-sizing: border-box;
+}
+
 body{
 
 }
@@ -8,4 +12,41 @@ h1{
 
 h1, h3, label, button, input{
     font-style: helvetica;
+}
+
+.add-new-food-item-button{
+    margin: 0;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button:focus{
+    outline: none
+}
+
+.add-new-food-item-button::before, 
+.add-new-food-item-button::after{
+    background-color: black;
+}
+
+.add-new-food-item-button::before, 
+.add-new-food-item-button::after{
+    content:"";
+    position: absolute;
+    width: 2px;
+    height: 15px;
+}
+
+.add-new-food-item-button::after{
+    transform: rotate(90deg);
 }

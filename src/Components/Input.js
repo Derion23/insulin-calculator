@@ -1,11 +1,14 @@
 import React from 'react'
 
+import '../style.css'
+
 export default function Input({id, name='',value='', onChange='', description='', placeholder='', unit=''}) {
     return (
         <div>
             <label>
                 {description}
             </label>
+            <br />
             <input
                 id={id}
                 name={name}

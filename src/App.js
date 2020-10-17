@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
-import "./style.css"
 
+import './style.css'
 import FixedInformationSection from './Components/FixedInformationSection'
 import ListSection from './Components/ListSection'
 import Output from './Components/Output.js'
@@ -125,17 +125,12 @@ export default function App() {
                 handleChange={handleChange}
                 deleteFoodItem={deleteFoodItem}
             />
-            <Output />
             {/* <button>berechne KE</button> */}
             <button 
                 onClick={calculateIE}
             >berechne IE</button>
-            <p>
-                <h3> {!(totalIE === '' || 
-                totalIE == undefined ||
-                totalIE <= 0
-                ) ? `Du musst dir ${totalIE} IE spritzen` : ''}</h3>
-            </p>
+            
+            <Output totalIE={totalIE}/>
         </div>  
     )
 }

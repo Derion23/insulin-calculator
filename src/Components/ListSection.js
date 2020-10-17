@@ -1,5 +1,6 @@
 import React from 'react'
 
+import '../style.css'
 import FoodItem from './FoodItem'
 
 export default function ListSection({foodItems=[], addNewFoodItem, handleChange, deleteFoodItem}) {
@@ -18,10 +19,12 @@ export default function ListSection({foodItems=[], addNewFoodItem, handleChange,
                     deleteFoodItem={deleteFoodItem}
              />)}
              
-            <button 
-                className='add-new-food-item-button'
-                onClick={() => addNewFoodItem()}
-            >+</button>
+            <p>
+                <button 
+                    className='add-new-food-item-button'
+                    onClick={() => addNewFoodItem()}
+                ></button>
+            </p>
         </div>
     )
 }
