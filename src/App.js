@@ -102,8 +102,7 @@ export default function App() {
         IE += correctionInsulin
         IE = Math.round(IE * 10) / 10
 
-        setTotalIE(IE)
-        window.scrollTo(0, 0)   
+        setTotalIE(IE)  
     }
     
     return (
