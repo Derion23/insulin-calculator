@@ -1,6 +1,6 @@
 import React from 'react'
 
-import '../style.css'
+import '../css/style.css'
 import Input from './Input'
 
 export default function FixedInformationSection(

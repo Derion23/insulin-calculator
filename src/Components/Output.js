@@ -1,15 +1,15 @@
 import React from 'react'
 
-import '../style.css'
+import '../css/style.css'
 
 export default function Output({totalIE}) {
     return (
         <div>
-            <p>
-                <h3> {!(totalIE === '' || 
+            <p className='output'>
+                {!(totalIE === '' || 
                 totalIE == undefined ||
                 totalIE <= 0
-                ) ? `Du musst dir ${totalIE} IE spritzen` : ''}</h3>
+                ) ? `Du musst dir ${totalIE} IE spritzen` : ''}
             </p>
         </div>
     )

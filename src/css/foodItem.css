@@ -1,0 +1,36 @@
+*, *::before, *::after{
+    box-sizing: border-box;
+}
+
+.delete-food-item-button{
+    margin: 0;
+    position: relative;
+    top: 50%;
+    left: 90%;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1rem;
+}
+
+
+.delete-food-item-button::before
+.delete-food-item-button::after{
+    content:"";
+    background-color: black;
+    
+    width: 2px;
+    height: 15px;
+}
+
+.delete-food-item-button::before{
+    transform: rotate(45deg);
+}
+
+.delete-food-item-button::after{
+    transform: rotate(-45deg);
+}

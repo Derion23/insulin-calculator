@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-import './style.css'
+import './css/style.css'
 import FixedInformationSection from './Components/FixedInformationSection'
 import ListSection from './Components/ListSection'
 import Output from './Components/Output.js'
@@ -127,6 +127,7 @@ export default function App() {
             />
             {/* <button>berechne KE</button> */}
             <button 
+                className='calculateIE-button'
                 onClick={calculateIE}
             >berechne IE</button>
             

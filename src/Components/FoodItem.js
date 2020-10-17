@@ -1,6 +1,7 @@
 import React from 'react'
 
-import '../style.css'
+import '../css/style.css'
+import '../css/foodItem.css'
 import Input from './Input'
 
 export default function FoodItem({id, name='', grams='', carbohydratesPer100Grams ='', handleChange, deleteFoodItem}) {
@@ -10,6 +11,7 @@ export default function FoodItem({id, name='', grams='', carbohydratesPer100Gram
                 className = 'delete-food-item-button'
                 onClick={() => deleteFoodItem(id)}
             >x</button>
+            
             <Input 
                 id = {id}
                 name = {'name'}

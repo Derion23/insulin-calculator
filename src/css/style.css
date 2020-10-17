@@ -2,6 +2,11 @@
     box-sizing: border-box;
 }
 
+:root{
+    --cell-size: 30px;
+    --mark-size: calc(var(--cell-size) * .9);
+}
+
 body{
 
 }
@@ -14,6 +19,25 @@ h1, h3, label, button, input{
     font-style: helvetica;
 }
 
+input{
+    width: 85%;
+    margin-right: 5px;
+    margin-bottom: 3px;
+    font-size: 1.1rem;
+}
+
+.output{
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.calculateIE-button{
+    font-size: 1.1rem;
+    padding: 2px, 5px;
+    border: 1px solid black;
+    border-radius: 3px;
+}
+
 .add-new-food-item-button{
     margin: 0;
     position: relative;
@@ -21,8 +45,8 @@ h1, h3, label, button, input{
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    width: 30px;
-    height: 30px;
+    width: var(--cell-size);
+    height: var(--cell-size);
     border-radius: 50%;
     border: 1px solid black;
     display: flex;
@@ -36,12 +60,8 @@ button:focus{
 
 .add-new-food-item-button::before, 
 .add-new-food-item-button::after{
-    background-color: black;
-}
-
-.add-new-food-item-button::before, 
-.add-new-food-item-button::after{
     content:"";
+    background-color: black;
     position: absolute;
     width: 2px;
     height: 15px;
@@ -50,3 +70,4 @@ button:focus{
 .add-new-food-item-button::after{
     transform: rotate(90deg);
 }
+

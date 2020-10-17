@@ -1,6 +1,6 @@
 import React from 'react'
 
-import '../style.css'
+import '../css/style.css'
 
 export default function Input({id, name='',value='', onChange='', description='', placeholder='', unit=''}) {
     return (

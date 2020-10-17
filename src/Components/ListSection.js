@@ -1,6 +1,6 @@
 import React from 'react'
 
-import '../style.css'
+import '../css/style.css'
 import FoodItem from './FoodItem'
 
 export default function ListSection({foodItems=[], addNewFoodItem, handleChange, deleteFoodItem}) {
