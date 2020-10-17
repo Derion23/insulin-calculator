@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useRef} from 'react'
 
 import './css/style.css'
 import FixedInformationSection from './Components/FixedInformationSection'
@@ -15,6 +15,8 @@ export default function App() {
 
     const [foodItems, setFoodItems] = useState([])
     const [totalIE, setTotalIE] = useState('')
+
+    const outputRef = useRef()
 
     function addNewFoodItem(){
         const newFoodItems = [...foodItems, {
@@ -102,7 +104,8 @@ export default function App() {
         IE += correctionInsulin
         IE = Math.round(IE * 10) / 10
 
-        setTotalIE(IE)  
+        setTotalIE(IE)
+        outputRef.current.scrollIntoView({smooth:true})
     }
     
     return (
@@ -131,7 +134,7 @@ export default function App() {
                 onClick={calculateIE}
             >berechne IE</button>
             
-            <Output totalIE={totalIE}/>
+            <Output totalIE={totalIE} outputRef={outputRef}/>
         </div>  
     )
 }
