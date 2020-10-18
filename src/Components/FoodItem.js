@@ -3,13 +3,32 @@ import React from 'react'
 import '../css/style.css'
 import Input from './Input'
 
-export default function FoodItem({id, name='', grams='', carbohydratesPer100Grams ='', handleChange, deleteFoodItem}) {
+export default function FoodItem(
+    {id, 
+    name='', 
+    grams='', 
+    carbohydratesPer100Grams='',
+    isIntermeal=false, 
+    handleIsIntermealChange, 
+    handleChange, 
+    deleteFoodItem
+    }) {
+
     return (
         <div>
             <button
                 className = 'delete-food-item-button'
                 onClick={() => deleteFoodItem(id)}
             >x</button>
+
+            <label className='intermeal-checkbox'>
+                <input
+                    type = 'checkbox'
+                    checked = {isIntermeal}
+                    onChange = {() => handleIsIntermealChange(id)}
+                ></input> ZM?
+            </label>
+            
             
             <Input 
                 id = {id}

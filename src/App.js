@@ -18,6 +18,7 @@ export default function App() {
     const [totalIE, setTotalIE] = useState('')
     const [totalKE, setTotalKE] = useState('')
     const [totalCorrectionInsulin, setTotalCorrectionInsulin] = useState('')
+    const [totalIntermealKE, setTotalIntermealKE] = useState('')
 
     const outputRef = useRef()
 
@@ -25,9 +26,7 @@ export default function App() {
         const newFoodItems = [...foodItems, {
             key:Math.random(),
             id:Math.random(),
-            name:'',
-            grams:'',
-            carbohydratesPer100Grams:''
+            isIntermeal: false
         }]
         setFoodItems(newFoodItems)
     }
@@ -52,6 +51,16 @@ export default function App() {
             if(id == foodItem.id){
                 return {...foodItem, [name]:value}
             }
+            return foodItem
+        })
+        setFoodItems(newFoodItems)
+    }
+
+    function handleIsIntermealChange(id){
+        const newFoodItems = foodItems.map(foodItem => {
+            if(id == foodItem.id)
+                return {...foodItem, isIntermeal: !foodItem.isIntermeal}
+            
             return foodItem
         })
         setFoodItems(newFoodItems)
@@ -97,11 +106,14 @@ export default function App() {
         const correctionInsulin = calculateCorrectionInsuline(bloodSugar, targetBloodSugar, correctionFactor)
         setTotalCorrectionInsulin(Math.round(correctionInsulin * 10) / 10)
 
-        // total KE
-        let KE = 0
-        for(const foodItem of foodItems)
+        // total KE | totalIntermealKE
+        let KE = 0, intermealKE = 0
+        for(const foodItem of foodItems){
             KE += calculateKE(foodItem)
+            intermealKE += foodItem.isIntermeal ? calculateKE(foodItem) : 0
+        }
         setTotalKE(Math.round(KE * 10) / 10)
+        setTotalIntermealKE(Math.round(intermealKE * 10) / 10)
         
         // total IE
         if(!areItemsTypeofNumber(carbohydrateFactor)) {
@@ -134,6 +146,7 @@ export default function App() {
             <ListSection 
                 foodItems={foodItems}
                 addNewFoodItem={addNewFoodItem}
+                handleIsIntermealChange={handleIsIntermealChange}
                 handleChange={handleChange}
                 deleteFoodItem={deleteFoodItem}
             />
@@ -146,6 +159,7 @@ export default function App() {
             <Output 
                 totalIE={totalIE}
                 totalKE={totalKE}
+                totalIntermealKE={totalIntermealKE}
                 totalCorrectionInsulin={totalCorrectionInsulin}
                 carbohydrateFactor={carbohydrateFactor}
                 outputRef={outputRef}
