@@ -19,6 +19,7 @@ export default function App() {
     const [totalKE, setTotalKE] = useState('')
     const [totalCorrectionInsulin, setTotalCorrectionInsulin] = useState('')
     const [totalIntermealKE, setTotalIntermealKE] = useState('')
+    const [totalMainMealKE, setTotalMainMealKE] = useState('')
 
     const outputRef = useRef()
 
@@ -114,6 +115,7 @@ export default function App() {
         }
         setTotalKE(Math.round(KE * 10) / 10)
         setTotalIntermealKE(Math.round(intermealKE * 10) / 10)
+        setTotalMainMealKE(Math.round((KE - intermealKE) * 10) / 10)
         
         // total IE
         if(!areItemsTypeofNumber(carbohydrateFactor)) {
@@ -158,10 +160,10 @@ export default function App() {
             
             <Output 
                 totalIE={totalIE}
-                totalKE={totalKE}
+                totalMainMealKE={totalMainMealKE}
                 totalIntermealKE={totalIntermealKE}
+                totalKE={totalKE}
                 totalCorrectionInsulin={totalCorrectionInsulin}
-                carbohydrateFactor={carbohydrateFactor}
                 outputRef={outputRef}
             />
         </div>  
