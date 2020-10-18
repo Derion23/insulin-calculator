@@ -14,7 +14,10 @@ export default function App() {
     const [carbohydrateFactor, setCarbohydrateFactor] = useLocalStorage('carbohydrateFactor')
 
     const [foodItems, setFoodItems] = useState([])
+
     const [totalIE, setTotalIE] = useState('')
+    const [totalKE, setTotalKE] = useState('')
+    const [totalCorrectionInsulin, setTotalCorrectionInsulin] = useState('')
 
     const outputRef = useRef()
 
@@ -90,17 +93,23 @@ export default function App() {
             return correctionInsulin
         }
 
+        // correction insulin
         const correctionInsulin = calculateCorrectionInsuline(bloodSugar, targetBloodSugar, correctionFactor)
-        let totalKE = 0
+        setTotalCorrectionInsulin(Math.round(correctionInsulin * 10) / 10)
+
+        // total KE
+        let KE = 0
         for(const foodItem of foodItems)
-            totalKE += calculateKE(foodItem)
+            KE += calculateKE(foodItem)
+        setTotalKE(Math.round(KE * 10) / 10)
         
+        // total IE
         if(!areItemsTypeofNumber(carbohydrateFactor)) {
             alert(ERROR_MESSAGE)
             return -1
         }
 
-        let IE = totalKE * toNumberFormat(carbohydrateFactor)
+        let IE = KE * toNumberFormat(carbohydrateFactor)
         IE += correctionInsulin
         IE = Math.round(IE * 10) / 10
 
@@ -134,7 +143,13 @@ export default function App() {
                 onClick={calculateIE}
             >berechne IE</button>
             
-            <Output totalIE={totalIE} outputRef={outputRef}/>
+            <Output 
+                totalIE={totalIE}
+                totalKE={totalKE}
+                totalCorrectionInsulin={totalCorrectionInsulin}
+                carbohydrateFactor={carbohydrateFactor}
+                outputRef={outputRef}
+            />
         </div>  
     )
 }

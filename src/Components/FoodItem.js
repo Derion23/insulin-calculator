@@ -13,21 +13,21 @@ export default function FoodItem({id, name='', grams='', carbohydratesPer100Gram
             
             <Input 
                 id = {id}
-                name = {'name'}
-                description = {'Name'}
+                name = 'name'
+                description = 'Name'
                 value = {name}
                 onChange = {(event) => handleChange(event)}
             />
             <Input
                 id = {id}
-                name = {'grams'}
+                name = 'grams'
                 description = 'Gramm'
                 value={grams}
                 onChange = {(event) => handleChange(event)}
             />
             <Input
                 id = {id}
-                name = {'carbohydratesPer100Grams'}
+                name = 'carbohydratesPer100Grams'
                 description = 'Kohlenhydrate pro 100g'
                 value={carbohydratesPer100Grams}
                 onChange = {(event) => handleChange(event)}
