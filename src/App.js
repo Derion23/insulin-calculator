@@ -7,11 +7,13 @@ import Output from './Components/Output.js'
 import useLocalStorage from './hooks/useLocalStorage.js'
 import FoodItem from './Components/FoodItem'
 
+const PREFIX = "insulin-calculator-"
+
 export default function App() {
     const [bloodSugar, setBloodSugar] = useState('')
-    const [targetBloodSugar, setTargetBloodSugar] = useLocalStorage('targetBloodSugar')
-    const [correctionFactor, setCorrectionFactor] = useLocalStorage('correctionFactor')
-    const [carbohydrateFactor, setCarbohydrateFactor] = useLocalStorage('carbohydrateFactor')
+    const [targetBloodSugar, setTargetBloodSugar] = useLocalStorage(`${getCurrentDayTime()}-targetBloodSugar`)
+    const [correctionFactor, setCorrectionFactor] = useLocalStorage(`${getCurrentDayTime()}-correctionFactor`)
+    const [carbohydrateFactor, setCarbohydrateFactor] = useLocalStorage(`${getCurrentDayTime()}-carbohydrateFactor`)
 
     const [foodItems, setFoodItems] = useState([])
 
@@ -22,6 +24,22 @@ export default function App() {
     const [totalMainMealKE, setTotalMainMealKE] = useState('')
 
     const outputRef = useRef()
+
+    function getCurrentDayTime(){
+        const [hours, minutes] = new Date().toLocaleTimeString().split(':')
+        const time = hours + (minutes / 60)
+        let dayTime = ''
+        
+        if(time <= 11.5){
+            dayTime = 'morning'
+        } else if(time <= 16){
+            dayTime = 'midday'
+        } else {
+            dayTime = 'evening'
+        }
+
+        return dayTime
+    }
 
     function addNewFoodItem(){
         const newFoodItems = [...foodItems, {
@@ -48,8 +66,28 @@ export default function App() {
 
     function handleChange(event){
         const {name, value, id} = event.target
+
         const newFoodItems = foodItems.map(foodItem => {
             if(id == foodItem.id){
+
+                // getting carbohydratesPer100Grams from name and setting the carbohydratesPer100Grams input
+                if(name === 'name'){
+                    const prefixedKey = `${PREFIX}foodItem-${value.toLowerCase()}-carbohydratesPer100Grams`
+                    const jsonValue = localStorage.getItem(prefixedKey)
+                    if(jsonValue != null){
+                        const carbohydratesPer100Grams = JSON.parse(jsonValue)
+
+                        return {...foodItem, [name]:value, 
+                            carbohydratesPer100Grams: carbohydratesPer100Grams}
+                    }
+                }      
+                
+                 // saving carbohydratesPer100Grams with name as key
+                 if(name === 'carbohydratesPer100Grams' && foodItem.name !== ''){
+                    const prefixedKey = `${PREFIX}foodItem-${foodItem.name.toLowerCase()}-carbohydratesPer100Grams`
+                    localStorage.setItem(prefixedKey, JSON.stringify(value))
+                }
+
                 return {...foodItem, [name]:value}
             }
             return foodItem
@@ -134,7 +172,6 @@ export default function App() {
     return (
         <div>
             <h1>Insulin Rechner</h1>
-
             <FixedInformationSection 
                 setBloodSugar={setBloodSugar}
                 setTargetBloodSugar={setTargetBloodSugar}
