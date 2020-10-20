@@ -85,7 +85,8 @@ export default function App() {
                  // saving carbohydratesPer100Grams with name as key
                  if(name === 'carbohydratesPer100Grams' && foodItem.name !== ''){
                     const prefixedKey = `${PREFIX}foodItem-${foodItem.name.toLowerCase()}-carbohydratesPer100Grams`
-                    localStorage.setItem(prefixedKey, JSON.stringify(value))
+                    if(value !== '') localStorage.setItem(prefixedKey, JSON.stringify(value))
+                    else localStorage.removeItem(prefixedKey)
                 }
 
                 return {...foodItem, [name]:value}
