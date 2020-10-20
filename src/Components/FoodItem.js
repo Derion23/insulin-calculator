@@ -19,7 +19,7 @@ export default function FoodItem(
             <button
                 className = 'delete-food-item-button'
                 onClick={() => deleteFoodItem(id)}
-            >x</button>
+            ></button>
 
             <label className='intermeal-checkbox'>
                 <input
