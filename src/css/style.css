@@ -51,31 +51,35 @@ label{
     font-weight: bold;
 }
 
+.calculateIE-button, 
+.save-data-button,
 .load-data-button{
-    width: 40%;
-    height: 40px;
-}
-
-.save-data-button{
-    width: 40%;
-    height: 40px;
-    float: right;
-}
-
-.calculateIE-button{
     font-size: calc(var(--input-font-size) * 1.2);
     padding: 10px;
     border: 1px solid black;
     border-radius: 3px;
     position: relative;
-    top: 50%;
-    left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+    -ms-transform: translate(0%, -50%);
+    transform: translate(0%, -50%);
 }
 
-.calculateIE-button:active{
+.calculateIE-button:active,
+.save-data-button:active,
+.load-data-button:active{
     background-color: rgb(211, 210, 210);
+}
+
+.load-data-button{
+    -ms-transform: translate(0%, 0%);
+    transform: translate(0%, 0%);
+}
+
+.save-data-button{
+    float: left;
+}
+
+.calculateIE-button{
+    float: right;
 }
 
 .delete-food-item-button{

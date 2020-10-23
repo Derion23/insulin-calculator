@@ -202,10 +202,6 @@ export default function App() {
                     className='load-data-button'
                     onClick = {loadData}
                 >Daten laden</button>
-                <button
-                    className='save-data-button'
-                    onClick = {saveData}
-                >Daten speichen</button>
             </p>
 
             <FixedInformationSection 
@@ -226,11 +222,17 @@ export default function App() {
                 deleteFoodItem={deleteFoodItem}
                 handleSuggestionClick={handleSuggestionClick}
             />
-            {/* <button>berechne KE</button> */}
+
+            <button
+                className='save-data-button'
+                onClick = {saveData}
+            >Daten speichen</button>
+
             <button 
                 className='calculateIE-button'
                 onClick={calculateIE}
-            >berechne IE</button>
+            >Berechne IE</button>
+            
             
             <Output 
                 totalIE={totalIE}

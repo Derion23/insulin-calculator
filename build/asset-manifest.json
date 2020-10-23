@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/insulin-calculator/static/css/main.43d367df.chunk.css",
-    "main.js": "/insulin-calculator/static/js/main.0a5a3d0b.chunk.js",
-    "main.js.map": "/insulin-calculator/static/js/main.0a5a3d0b.chunk.js.map",
+    "main.css": "/insulin-calculator/static/css/main.9972e9c7.chunk.css",
+    "main.js": "/insulin-calculator/static/js/main.8f2e0a74.chunk.js",
+    "main.js.map": "/insulin-calculator/static/js/main.8f2e0a74.chunk.js.map",
     "runtime-main.js": "/insulin-calculator/static/js/runtime-main.c9afee95.js",
     "runtime-main.js.map": "/insulin-calculator/static/js/runtime-main.c9afee95.js.map",
     "static/js/2.73e5b6db.chunk.js": "/insulin-calculator/static/js/2.73e5b6db.chunk.js",
     "static/js/2.73e5b6db.chunk.js.map": "/insulin-calculator/static/js/2.73e5b6db.chunk.js.map",
     "index.html": "/insulin-calculator/index.html",
-    "precache-manifest.bf98739e2aa7c20ac83d6e27a1f3bfa7.js": "/insulin-calculator/precache-manifest.bf98739e2aa7c20ac83d6e27a1f3bfa7.js",
+    "precache-manifest.0e5d4be3589b6899063a279cdd4aa507.js": "/insulin-calculator/precache-manifest.0e5d4be3589b6899063a279cdd4aa507.js",
     "service-worker.js": "/insulin-calculator/service-worker.js",
-    "static/css/main.43d367df.chunk.css.map": "/insulin-calculator/static/css/main.43d367df.chunk.css.map",
+    "static/css/main.9972e9c7.chunk.css.map": "/insulin-calculator/static/css/main.9972e9c7.chunk.css.map",
     "static/js/2.73e5b6db.chunk.js.LICENSE.txt": "/insulin-calculator/static/js/2.73e5b6db.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.c9afee95.js",
     "static/js/2.73e5b6db.chunk.js",
-    "static/css/main.43d367df.chunk.css",
-    "static/js/main.0a5a3d0b.chunk.js"
+    "static/css/main.9972e9c7.chunk.css",
+    "static/js/main.8f2e0a74.chunk.js"
   ]
 }
