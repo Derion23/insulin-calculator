@@ -5,11 +5,13 @@ import FixedInformationSection from './Components/FixedInformationSection'
 import ListSection from './Components/ListSection'
 import Output from './Components/Output.js'
 import useLocalStorage from './hooks/useLocalStorage.js'
-import FoodItem from './Components/FoodItem'
+
 
 const PREFIX = "insulin-calculator-"
 
 export default function App() {
+    const [lastSavedData, setLastSavedData] = useLocalStorage('lastSavedData')
+
     const [bloodSugar, setBloodSugar] = useState('')
     const [targetBloodSugar, setTargetBloodSugar] = useLocalStorage(`${getCurrentDayTime()}-targetBloodSugar`)
     const [correctionFactor, setCorrectionFactor] = useLocalStorage(`${getCurrentDayTime()}-correctionFactor`)
@@ -24,6 +26,28 @@ export default function App() {
     const [totalMainMealKE, setTotalMainMealKE] = useState('')
 
     const outputRef = useRef()
+
+    function saveData(){
+        const newData = {
+            foodItems: foodItems
+        }
+        setLastSavedData(newData)
+    }
+
+    function loadData(){
+        if(lastSavedData == null) return
+        const {foodItems} = lastSavedData
+
+        setFoodItems(foodItems)
+
+        // not working because of async state setting
+        calculateIE()
+    }
+
+    function handleSuggestionClick(suggestionText, id){
+        const event = {target:{name:'name', value:suggestionText, id:id}}
+        handleChange(event)
+    }
 
     function getCurrentDayTime(){
         const [hours, minutes] = new Date().toLocaleTimeString().split(':')
@@ -173,6 +197,18 @@ export default function App() {
     return (
         <div>
             <h1>Insulin Rechner</h1>
+
+            <p>
+                <button
+                    className='load-data-button'
+                    onClick = {loadData}
+                >Daten laden</button>
+                <button
+                    className='save-data-button'
+                    onClick = {saveData}
+                >Daten speichen</button>
+            </p>
+
             <FixedInformationSection 
                 setBloodSugar={setBloodSugar}
                 setTargetBloodSugar={setTargetBloodSugar}
@@ -189,6 +225,7 @@ export default function App() {
                 handleIsIntermealChange={handleIsIntermealChange}
                 handleChange={handleChange}
                 deleteFoodItem={deleteFoodItem}
+                handleSuggestionClick={handleSuggestionClick}
             />
             {/* <button>berechne KE</button> */}
             <button 

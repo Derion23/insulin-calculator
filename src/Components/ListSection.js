@@ -3,7 +3,14 @@ import React from 'react'
 import '../css/style.css'
 import FoodItem from './FoodItem'
 
-export default function ListSection({foodItems=[], addNewFoodItem, handleIsIntermealChange, handleChange, deleteFoodItem}) {
+export default function ListSection(
+    {foodItems=[], 
+    addNewFoodItem, 
+    handleIsIntermealChange, 
+    handleChange, 
+    deleteFoodItem,
+    handleSuggestionClick
+    }) {
     return (
         <div>
             <h3>Elemente</h3>
@@ -19,6 +26,7 @@ export default function ListSection({foodItems=[], addNewFoodItem, handleIsInter
                     handleIsIntermealChange={handleIsIntermealChange}
                     handleChange={handleChange}
                     deleteFoodItem={deleteFoodItem}
+                    handleSuggestionClick={handleSuggestionClick}
              />)}
              
             <p>

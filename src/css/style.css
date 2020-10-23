@@ -51,6 +51,17 @@ label{
     font-weight: bold;
 }
 
+.load-data-button{
+    width: 40%;
+    height: 40px;
+}
+
+.save-data-button{
+    width: 40%;
+    height: 40px;
+    float: right;
+}
+
 .calculateIE-button{
     font-size: calc(var(--input-font-size) * 1.2);
     padding: 10px;

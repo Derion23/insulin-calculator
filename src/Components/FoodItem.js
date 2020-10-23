@@ -2,6 +2,7 @@ import React from 'react'
 
 import '../css/style.css'
 import Input from './Input'
+import SuggestionList from './SuggestionList.js'
 
 export default function FoodItem(
     {id, 
@@ -11,7 +12,9 @@ export default function FoodItem(
     isIntermeal=false, 
     handleIsIntermealChange, 
     handleChange, 
-    deleteFoodItem
+    deleteFoodItem,
+    suggestions=false,
+    handleSuggestionClick
     }) {
 
     return (
@@ -37,6 +40,13 @@ export default function FoodItem(
                 value = {name}
                 onChange = {(event) => handleChange(event)}
             />
+
+            {suggestions && <SuggestionList 
+                allSuggestions={['banane', 'bambus', 'brötchen', 'apfel', 'ananas']}
+                searchingText={name}
+                handleSuggestionClick={(suggestionText) => handleSuggestionClick(suggestionText, id)}
+            />}
+
             <Input
                 id = {id}
                 name = 'grams'
