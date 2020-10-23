@@ -51,9 +51,8 @@ export default function App() {
 
     function getCurrentDayTime(){
         const [hours, minutes] = new Date().toLocaleTimeString().split(':')
-        const time = hours + (minutes / 60)
+        const time =  toNumberFormat(hours) + (toNumberFormat(minutes) / 60)
         let dayTime = ''
-        
         if(time <= 11.5){
             dayTime = 'morning'
         } else if(time <= 16){
@@ -130,15 +129,15 @@ export default function App() {
         setFoodItems(newFoodItems)
     }
 
+    function toNumberFormat(string){
+        let stringCopy = string.slice()
+        stringCopy = stringCopy.replace(',', '.')
+        const number = parseFloat(stringCopy)
+        return Number.isNaN(number) ? -1 : number
+    }
+
     function calculateIE(){
         const ERROR_MESSAGE = 'ein oder mehrere Werte sind nicht gültig'
-
-        function toNumberFormat(string){
-            let stringCopy = string.slice()
-            stringCopy = stringCopy.replace(',', '.')
-            const number = parseFloat(stringCopy)
-            return Number.isNaN(number) ? -1 : number
-        }
 
         function areItemsTypeofNumber(...items){
             for(const item of items)
