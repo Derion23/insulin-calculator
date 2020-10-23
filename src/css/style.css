@@ -61,6 +61,7 @@ label{
     position: relative;
     -ms-transform: translate(0%, -50%);
     transform: translate(0%, -50%);
+    margin-right: 10px;
 }
 
 .calculateIE-button:active,
@@ -79,7 +80,7 @@ label{
 }
 
 .calculateIE-button{
-    float: right;
+    
 }
 
 .delete-food-item-button{
