@@ -10,6 +10,7 @@ export default function Input({id, name='',value='', onChange='', description=''
             </label>
             <br />
             <input
+                type='text'
                 id={id}
                 name={name}
                 placeholder={placeholder}

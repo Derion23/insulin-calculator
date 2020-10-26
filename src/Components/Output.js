@@ -16,7 +16,7 @@ export default function Output(
                     Korrektur-Insulin: {totalCorrectionInsulin} IE  <br />
                     Gesamt-Insulin: {totalIE} IE
                 </p>
-
+                
              : ''}
         </div>
     )

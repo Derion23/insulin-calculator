@@ -25,13 +25,21 @@ h3{
     font-size: calc(var(--input-font-size) * 1.2);
 }
 
-input{
+input[type='text']{
+    padding: 4px;
     width: 85%;
     margin-right: 5px;
     margin-bottom: 3px;
     font-size: var(--input-font-size);
     font-weight: bold;
-    /* border: 1px solid rgba(0, 0, 0, 0.1) */
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    outline: none;
+    border-radius: 7px;
+}
+
+input[type='text']:focus{
+    border-color: transparent;
+    box-shadow: 0 0 0 2px rgb(228, 148, 0);
 }
 
 .intermeal-checkbox input {
