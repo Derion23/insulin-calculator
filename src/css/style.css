@@ -25,8 +25,13 @@ h3{
     font-size: calc(var(--input-font-size) * 1.2);
 }
 
+.description-space-to-input{
+    margin-top: 20px;
+}
+
 input[type='text']{
     padding: 4px;
+    padding-left: 8px;
     width: 85%;
     margin-right: 5px;
     margin-bottom: 3px;
@@ -34,12 +39,12 @@ input[type='text']{
     font-weight: bold;
     border: 1px solid rgba(0, 0, 0, 0.4);
     outline: none;
-    border-radius: 7px;
+    border-radius: 10px;
 }
 
 input[type='text']:focus{
     border-color: transparent;
-    box-shadow: 0 0 0 2px rgb(228, 148, 0);
+    box-shadow: 0 0 1px 2px rgb(228, 148, 0);
 }
 
 .intermeal-checkbox input {

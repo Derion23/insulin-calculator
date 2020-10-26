@@ -5,7 +5,7 @@ import '../css/style.css'
 export default function Input({id, name='',value='', onChange='', description='', placeholder='', unit=''}) {
     return (
         <div>
-            <label>
+            <label> 
                 {description}
             </label>
             <br />
