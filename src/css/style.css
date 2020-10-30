@@ -1,5 +1,6 @@
 *, *::before, *::after{
     box-sizing: border-box;
+    font-family: Helvetica, sans-serif;
 }
 
 :root{
@@ -23,16 +24,8 @@
     display: none;
 }
 
-body{
-
-}
-
 h1{
     text-align: center;
-}
-
-h1, h3, label, button, input{
-    font-style: helvetica;
 }
 
 h3{
