@@ -9,6 +9,20 @@
     --input-font-size: 1.15rem
 }
 
+/* #loadingScreen{
+    font: 3rem sans-serif;
+    position: absolute;
+    margin: 0;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+} */
+
+.hide{
+    display: none;
+}
+
 body{
 
 }
@@ -23,10 +37,6 @@ h1, h3, label, button, input{
 
 h3{
     font-size: calc(var(--input-font-size) * 1.2);
-}
-
-.description-space-to-input{
-    margin-top: 20px;
 }
 
 input[type='text']{

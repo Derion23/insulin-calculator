@@ -9,7 +9,7 @@ import useLocalStorage from './hooks/useLocalStorage.js'
 
 const PREFIX = "insulin-calculator-"
 
-export default function App() {
+export default function App( {hideLoadingScreen} ) {
     const [lastSavedData, setLastSavedData] = useLocalStorage('lastSavedData')
 
     const [bloodSugar, setBloodSugar] = useState('')
@@ -26,7 +26,12 @@ export default function App() {
     const [totalMainMealKE, setTotalMainMealKE] = useState('')
 
     const outputRef = useRef()
-
+    
+    
+    // useEffect(() => {
+    //     hideLoadingScreen()
+    // }, [])
+    
     function saveData(){
         const newData = {
             foodItems: foodItems
