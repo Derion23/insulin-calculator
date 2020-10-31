@@ -7,21 +7,31 @@
     --add-food-item-cell-size: 45px;
     --delete-food-item-cell-size: 30px;
     --mark-size: calc(var(--add-food-item-cell-size) * .9);
-    --input-font-size: 1.15rem
+    --input-font-size: 1.15rem;
+    --input-border-radius: 10px;
+    --input-width: 85%;
+    --suggestion-list-padding: 10px;
+    --body-margin: 8px;
 }
 
-/* #loadingScreen{
-    font: 3rem sans-serif;
-    position: absolute;
-    margin: 0;
-    top: 50%;
-    left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-} */
+body{
+    margin: var(--body-margin);
+}
 
-.hide{
-    display: none;
+.suggestion-list{
+    margin: 0;
+    position: absolute;
+    padding: var(--suggestion-list-padding);
+    list-style: none;
+    width: calc(var(--input-width) - 2 * var(--body-margin));
+    border-radius: var(--input-border-radius);
+    background-color: rgb(177, 177, 177);
+}
+
+li{
+    margin: 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 h1{
@@ -35,14 +45,14 @@ h3{
 input[type='text']{
     padding: 4px;
     padding-left: 8px;
-    width: 85%;
+    width: var(--input-width);
+    margin: 0;
     margin-right: 5px;
-    margin-bottom: 3px;
     font-size: var(--input-font-size);
     font-weight: bold;
     border: 1px solid rgba(0, 0, 0, 0.4);
     outline: none;
-    border-radius: 10px;
+    border-radius: var(--input-border-radius);
 }
 
 input[type='text']:focus{

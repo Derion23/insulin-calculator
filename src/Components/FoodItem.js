@@ -10,10 +10,11 @@ export default function FoodItem(
     grams='', 
     carbohydratesPer100Grams='',
     isIntermeal=false, 
+    foodNameSuggestions,
     handleIsIntermealChange, 
-    handleChange, 
+    handleChange,
     deleteFoodItem,
-    suggestions=false,
+    shouldDisplaySuggestions=true,
     handleSuggestionClick
     }) {
 
@@ -40,9 +41,8 @@ export default function FoodItem(
                 value = {name}
                 onChange = {(event) => handleChange(event)}
             />
-
-            {suggestions && <SuggestionList 
-                allSuggestions={['banane', 'bambus', 'brötchen', 'apfel', 'ananas']}
+            {shouldDisplaySuggestions && <SuggestionList 
+                allSuggestions={foodNameSuggestions}
                 searchingText={name}
                 handleSuggestionClick={(suggestionText) => handleSuggestionClick(suggestionText, id)}
             />}

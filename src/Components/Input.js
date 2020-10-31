@@ -11,6 +11,7 @@ export default function Input({id, name='',value='', onChange='', description=''
             <br />
             <input
                 type='text'
+                autoComplete='off'
                 id={id}
                 name={name}
                 placeholder={placeholder}
