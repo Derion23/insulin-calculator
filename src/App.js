@@ -29,6 +29,11 @@ export default function App() {
 
     const outputRef = useRef()
 
+    useEffect(() => {
+        calculateIE()
+    }, [])
+    
+
     function handleSlideChange(id, activeSlideIdx){
         const newFoodItems = foodItems.map(foodItem => {
             if(id == foodItem.id){
@@ -36,10 +41,10 @@ export default function App() {
                 const slide2 = {...foodItem.slide2}
                 return {...foodItem, slide1:slide1, slide2:slide2, activeSlideIdx: activeSlideIdx + 1}
             }
-
+            
             return foodItem
-       })
-       setFoodItems(newFoodItems)   
+        })
+        setFoodItems(newFoodItems)   
     }
 
     function capitalize(string){
@@ -81,6 +86,7 @@ export default function App() {
 
     function clearData(){
         setFoodItems([])
+        setTotalIE(0)
     }
    
     function saveData(){

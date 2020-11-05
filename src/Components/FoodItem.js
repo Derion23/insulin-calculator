@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {Swiper, SwiperSlide} from 'swiper/react'
 import SwiperCore, {Pagination} from 'swiper'
 import 'swiper/swiper-bundle.min.css'
