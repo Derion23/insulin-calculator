@@ -1,20 +1,23 @@
 {
   "files": {
-    "main.css": "/insulin-calculator/static/css/main.933d2005.chunk.css",
-    "main.js": "/insulin-calculator/static/js/main.d897317d.chunk.js",
-    "main.js.map": "/insulin-calculator/static/js/main.d897317d.chunk.js.map",
+    "main.css": "/insulin-calculator/static/css/main.53b74f60.chunk.css",
+    "main.js": "/insulin-calculator/static/js/main.a59d36a4.chunk.js",
+    "main.js.map": "/insulin-calculator/static/js/main.a59d36a4.chunk.js.map",
     "runtime-main.js": "/insulin-calculator/static/js/runtime-main.019a18b3.js",
     "runtime-main.js.map": "/insulin-calculator/static/js/runtime-main.019a18b3.js.map",
-    "static/js/2.69eead2f.chunk.js": "/insulin-calculator/static/js/2.69eead2f.chunk.js",
-    "static/js/2.69eead2f.chunk.js.map": "/insulin-calculator/static/js/2.69eead2f.chunk.js.map",
+    "static/css/2.2f97ee7f.chunk.css": "/insulin-calculator/static/css/2.2f97ee7f.chunk.css",
+    "static/js/2.3586508b.chunk.js": "/insulin-calculator/static/js/2.3586508b.chunk.js",
+    "static/js/2.3586508b.chunk.js.map": "/insulin-calculator/static/js/2.3586508b.chunk.js.map",
     "index.html": "/insulin-calculator/index.html",
-    "static/css/main.933d2005.chunk.css.map": "/insulin-calculator/static/css/main.933d2005.chunk.css.map",
-    "static/js/2.69eead2f.chunk.js.LICENSE.txt": "/insulin-calculator/static/js/2.69eead2f.chunk.js.LICENSE.txt"
+    "static/css/2.2f97ee7f.chunk.css.map": "/insulin-calculator/static/css/2.2f97ee7f.chunk.css.map",
+    "static/css/main.53b74f60.chunk.css.map": "/insulin-calculator/static/css/main.53b74f60.chunk.css.map",
+    "static/js/2.3586508b.chunk.js.LICENSE.txt": "/insulin-calculator/static/js/2.3586508b.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.019a18b3.js",
-    "static/js/2.69eead2f.chunk.js",
-    "static/css/main.933d2005.chunk.css",
-    "static/js/main.d897317d.chunk.js"
+    "static/css/2.2f97ee7f.chunk.css",
+    "static/js/2.3586508b.chunk.js",
+    "static/css/main.53b74f60.chunk.css",
+    "static/js/main.a59d36a4.chunk.js"
   ]
 }
