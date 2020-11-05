@@ -18,6 +18,19 @@ body{
     margin: var(--body-margin);
 }
 
+/* SWIPER */
+.swiper-container{
+    
+}
+
+.swiper-wrapper{
+    padding: 0;
+}
+
+.swiper-slide{
+    padding-bottom: 10px;
+}
+
 .suggestion-list{
     margin: 0;
     position: absolute;
@@ -79,24 +92,27 @@ label{
 
 .calculateIE-button, 
 .save-data-button,
-.load-data-button{
+.load-data-button,
+.clear-data-button{
     font-size: calc(var(--input-font-size) * 1.2);
     padding: 10px;
     border: 1px solid black;
     border-radius: 3px;
     position: relative;
-    -ms-transform: translate(0%, -50%);
-    transform: translate(0%, -50%);
+    /* -ms-transform: translate(0%, -50%);
+    transform: translate(0%, -50%); */
     margin-right: 10px;
 }
 
 .calculateIE-button:active,
 .save-data-button:active,
-.load-data-button:active{
+.load-data-button:active,
+.clear-data-button:active{
     background-color: rgb(211, 210, 210);
 }
 
-.load-data-button{
+.load-data-button,
+.clear-data-button{
     -ms-transform: translate(0%, 0%);
     transform: translate(0%, 0%);
 }
@@ -106,7 +122,9 @@ label{
 }
 
 .calculateIE-button{
-    
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
 
 .delete-food-item-button{

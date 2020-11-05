@@ -1,5 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react'
 
+
 import './css/style.css'
 import FixedInformationSection from './Components/FixedInformationSection'
 import ListSection from './Components/ListSection'
@@ -9,7 +10,7 @@ import useLocalStorage from './hooks/useLocalStorage.js'
 
 const PREFIX = "insulin-calculator-"
 
-export default function App( {hideLoadingScreen} ) {
+export default function App() {
     const [lastSavedData, setLastSavedData] = useLocalStorage('lastSavedData')
     const [foodNameSuggestions, setFoodNameSuggestions] = useLocalStorage('foodNameSuggestions', [])
 
@@ -18,7 +19,7 @@ export default function App( {hideLoadingScreen} ) {
     const [correctionFactor, setCorrectionFactor] = useLocalStorage(`${getCurrentDayTime()}-correctionFactor`)
     const [carbohydrateFactor, setCarbohydrateFactor] = useLocalStorage(`${getCurrentDayTime()}-carbohydrateFactor`)
 
-    const [foodItems, setFoodItems] = useState([])
+    const [foodItems, setFoodItems] = useLocalStorage('foodItems', [])
 
     const [totalIE, setTotalIE] = useState('')
     const [totalKE, setTotalKE] = useState('')
@@ -28,32 +29,17 @@ export default function App( {hideLoadingScreen} ) {
 
     const outputRef = useRef()
 
-    useEffect(() => {
-        addAllFoodItemsInLocalStorageToFoodNameSuggestions()
-    }, [])
-
-    function addAllFoodItemsInLocalStorageToFoodNameSuggestions(){
-        const allFoodItemsInLocalStorage = getAllFoodItemsInLocalStorage()
-        
-        addNewFoodNameSuggestion(allFoodItemsInLocalStorage)
-    }
-
-    function getAllFoodItemsInLocalStorage(){
-        const everyKey = Object.keys(localStorage)
-        const allFoodItemKeysInLocalStorage = []
-        
-        for(const key of everyKey){
-            const wordsInKey = key.split('-')
-            if(wordsInKey.length < 3) continue
-
-            const hasCorrectPrefix = `${PREFIX}foodItem` === `${wordsInKey[0]}-${wordsInKey[1]}-${wordsInKey[2]}`
-            if(hasCorrectPrefix){
-                const foodItemKey = capitalize(wordsInKey[3])
-                allFoodItemKeysInLocalStorage.push(foodItemKey)
+    function handleSlideChange(id, activeSlideIdx){
+        const newFoodItems = foodItems.map(foodItem => {
+            if(id == foodItem.id){
+                const slide1 = {...foodItem.slide1}
+                const slide2 = {...foodItem.slide2}
+                return {...foodItem, slide1:slide1, slide2:slide2, activeSlideIdx: activeSlideIdx + 1}
             }
-        }
 
-        return allFoodItemKeysInLocalStorage
+            return foodItem
+       })
+       setFoodItems(newFoodItems)   
     }
 
     function capitalize(string){
@@ -62,7 +48,7 @@ export default function App( {hideLoadingScreen} ) {
         return capitalizedString
     }
 
-    function addNewFoodNameSuggestion(toAddFoodNameSuggestions){
+    function addNewFoodNameSuggestions(toAddFoodNameSuggestions){
         let newFoodNameSuggestions = toAddFoodNameSuggestions
 
         if(!Array.isArray(toAddFoodNameSuggestions)) newFoodNameSuggestions = [toAddFoodNameSuggestions]
@@ -92,6 +78,10 @@ export default function App( {hideLoadingScreen} ) {
         newFoodNameSuggestions.splice(removeIdx, 1)
         setFoodNameSuggestions(newFoodNameSuggestions)
     }
+
+    function clearData(){
+        setFoodItems([])
+    }
    
     function saveData(){
         const newData = {
@@ -112,7 +102,7 @@ export default function App( {hideLoadingScreen} ) {
 
     function handleSuggestionClick(suggestionText, id){
         const event = {target:{name:'name', value:suggestionText, id:id}}
-        handleChange(event)
+        handleSlide1ValueChange(event)
     }
 
     function getCurrentDayTime(){
@@ -131,11 +121,25 @@ export default function App( {hideLoadingScreen} ) {
     }
 
     function addNewFoodItem(){
+        const id = Math.random()
         const newFoodItems = [...foodItems, {
-            key:Math.random(),
-            id:Math.random(),
-            isIntermeal: false,
-            shouldDisplaySuggestions: true
+            key: Math.random(),
+            id: id,
+            activeSlideIdx: 1,
+            slide1: {
+                name: '',
+                grams: '',
+                carbohydratesPer100Grams: '',
+                isIntermeal: false,
+                shouldDisplaySuggestions: true
+            },
+            slide2: {
+                name: '',
+                numberOfPieces: '',
+                carbohydratesPerPiece: '',
+                isIntermeal: false,
+                shouldDisplaySuggestions: true
+            }
         }]
         setFoodItems(newFoodItems)
     }
@@ -154,59 +158,116 @@ export default function App( {hideLoadingScreen} ) {
         setFoodItems(newFoodItems)
     }
 
-    function handleChange(event){
+    function handleSlide1ValueChange(event){
         const {name, value, id} = event.target
 
         if(value[value.length - 1] === '-') return
 
         const newFoodItems = foodItems.map(foodItem => {
-            if(id == foodItem.id){
+            // would not work with !==
+            if(id != foodItem.id) return foodItem
+        
+            // getting the carbohydratesPer100Grams with the name from localStorage
+            // if they exist set the carbohydratesPer100Grams input value
+            if(name === 'name'){
+                const prefixedKey = `${PREFIX}foodItem-${value.toLowerCase()}-carbohydratesPer100Grams`
+                const jsonValue = localStorage.getItem(prefixedKey)
+                if(jsonValue != null){
+                    const carbohydratesPer100Grams = JSON.parse(jsonValue)
 
-                // getting carbohydratesPer100Grams from name and setting the carbohydratesPer100Grams input
-                if(name === 'name'){
-                    const prefixedKey = `${PREFIX}foodItem-${value.toLowerCase()}-carbohydratesPer100Grams`
-                    const jsonValue = localStorage.getItem(prefixedKey)
-                    if(jsonValue != null){
-                        const carbohydratesPer100Grams = JSON.parse(jsonValue)
-                        
-                        // foodNameSuggestion
-                        const newFoodNameSuggestion = capitalize(value.toLowerCase())
-                        addNewFoodNameSuggestion(newFoodNameSuggestion)
+                    const slide1 = {...foodItem.slide1, [name]:value, shouldDisplaySuggestions: false,
+                        carbohydratesPer100Grams: carbohydratesPer100Grams}
 
-                        return {...foodItem, [name]:value, shouldDisplaySuggestions: false,
-                            carbohydratesPer100Grams: carbohydratesPer100Grams}
-                    }
+                    return {...foodItem, slide1:slide1}
                 }
-                    
-                // saving carbohydratesPer100Grams with name as key
-                if(name === 'carbohydratesPer100Grams' && foodItem.name !== '' && foodItem.name != null
-                && foodItem.name[0] !== '.'){
-                    const prefixedKeyFoodItem = `${PREFIX}foodItem-${foodItem.name.toLowerCase()}-carbohydratesPer100Grams`
-                    const newFoodNameSuggestion = capitalize(foodItem.name.toLowerCase())
-                    if(value !== '') {
-                        // store foodItems carbohydratesPer100Grams
-                        localStorage.setItem(prefixedKeyFoodItem, JSON.stringify(value))
-                        // foodNameSuggestion
-                        addNewFoodNameSuggestion(newFoodNameSuggestion)
-                    } else {
-                        localStorage.removeItem(prefixedKeyFoodItem)
-                        // foodNameSuggestion
-                        deleteFoodNameSuggestion(newFoodNameSuggestion)
-                    }
+            }
+            
+            // storing the carbohydratesPer100Grams with name as a key in localStorage
+            // storing a new foodNameSuggestion in localStorage
+            const isNameValid = foodItem.slide1.name !== '' && foodItem.slide1.name != null 
+                                && foodItem.slide1.name[0] !== '.'
+            if(name === 'carbohydratesPer100Grams' && isNameValid){
+                const prefixedKey = `${PREFIX}foodItem-${foodItem.slide1.name.toLowerCase()}-carbohydratesPer100Grams`
+                const newFoodNameSuggestion = capitalize(foodItem.slide1.name.toLowerCase())
+                if(value !== '') {
+                    // store foodItems carbohydratesPer100Grams
+                    localStorage.setItem(prefixedKey, JSON.stringify(value))
+                    // foodNameSuggestion
+                    addNewFoodNameSuggestions(newFoodNameSuggestion)
+                } else {
+                    localStorage.removeItem(prefixedKey)
+                    // foodNameSuggestion
+                    deleteFoodNameSuggestion(newFoodNameSuggestion)
                 }
-                const hasNameChanged = name === 'name'
-                return {...foodItem, [name]:value, shouldDisplaySuggestions: hasNameChanged}
-            } else
-                return foodItem
+            }
+            const hasNameChanged = name === 'name'
+            const slide1 = {...foodItem.slide1, [name]:value, shouldDisplaySuggestions: hasNameChanged}
+            return {...foodItem, slide1:slide1}
         })
         setFoodItems(newFoodItems)
     }
 
-    function handleIsIntermealChange(id){
+    function handleSlide2ValueChange(event){
+        const {name, value, id} = event.target
+
+        if(value[value.length - 1] === '-') return
+
         const newFoodItems = foodItems.map(foodItem => {
-            if(id == foodItem.id)
-                return {...foodItem, isIntermeal: !foodItem.isIntermeal}
+            // would not work with !==
+            if(id != foodItem.id) return foodItem
+        
+            // getting the carbohydratesPerPiece with the name from localStorage
+            // if they exist set the carbohydratesPerPiece input value
+            if(name === 'name'){
+                const prefixedKey = `${PREFIX}foodItem-${value.toLowerCase()}-carbohydratesPerPiece`
+                const jsonValue = localStorage.getItem(prefixedKey)
+                if(jsonValue != null){
+                    const carbohydratesPerPiece = JSON.parse(jsonValue)
+
+                    const slide2 = {...foodItem.slide2, [name]:value, shouldDisplaySuggestions: false,
+                        carbohydratesPerPiece: carbohydratesPerPiece}
+
+                    return {...foodItem, slide2:slide2}
+                }
+            }
             
+            // storing the carbohydratesPerPiece with name as a key in localStorage
+            // storing a new foodNameSuggestion in localStorage
+            const isNameValid = foodItem.slide2.name !== '' && foodItem.slide2.name != null 
+                                && foodItem.slide2.name[0] !== '.'
+            if(name === 'carbohydratesPerPiece' && isNameValid){
+                const prefixedKey = `${PREFIX}foodItem-${foodItem.slide2.name.toLowerCase()}-carbohydratesPerPiece`
+                const newFoodNameSuggestion = capitalize(foodItem.slide2.name.toLowerCase())
+                if(value !== '') {
+                    // store foodItems carbohydratesPerPiece
+                    localStorage.setItem(prefixedKey, JSON.stringify(value))
+                    // foodNameSuggestion
+                        //addNewFoodNameSuggestions(newFoodNameSuggestion)
+                } else {
+                    localStorage.removeItem(prefixedKey)
+                    // foodNameSuggestion
+                        //deleteFoodNameSuggestion(newFoodNameSuggestion)
+                }
+            }
+            const hasNameChanged = name === 'name'
+            const slide2 = {...foodItem.slide2, [name]:value, shouldDisplaySuggestions: hasNameChanged}
+            return {...foodItem, slide2:slide2}
+        })
+        setFoodItems(newFoodItems)
+    }
+
+    function handleIsIntermealChange(id, activeSlideIdx){
+        const newFoodItems = foodItems.map(foodItem => {
+            if(id == foodItem.id){
+                if(activeSlideIdx === 1){
+                    const slide1 = {...foodItem.slide1, isIntermeal: !foodItem.slide1.isIntermeal}
+                    return {...foodItem, slide1:slide1}
+                } else {
+                    const slide2 = {...foodItem.slide2, isIntermeal: !foodItem.slide2.isIntermeal}
+                    return {...foodItem, slide2:slide2}
+                }
+            }
+                
             return foodItem
         })
         setFoodItems(newFoodItems)
@@ -223,21 +284,25 @@ export default function App( {hideLoadingScreen} ) {
         const ERROR_MESSAGE = 'ein oder mehrere Werte sind nicht gültig'
 
         function areItemsTypeofNumber(...items){
-            for(const item of items)
+            /* for(const item of items)
                 if(toNumberFormat(item) === -1) return false
-            return true
+            return true */
+            return items.every(item => toNumberFormat(item) !== -1)
         }
 
         function calculateKE(foodItem){
-            if(!areItemsTypeofNumber(foodItem.grams, foodItem.carbohydratesPer100Grams)) {
+            const grams = foodItem.slide1.grams
+            const carbohydratesPer100Grams = foodItem.slide1.carbohydratesPer100Grams
+
+            if(!areItemsTypeofNumber(grams, carbohydratesPer100Grams)) {
                 alert(ERROR_MESSAGE)
                 return 0
             }
 
-            return (toNumberFormat(foodItem.grams) * (toNumberFormat(foodItem.carbohydratesPer100Grams) / 100)) / 10
+            return (toNumberFormat(grams) * (toNumberFormat(carbohydratesPer100Grams) / 100)) / 10
         }
 
-        function calculateCorrectionInsuline(bloodSugar, targetBloodSugar, correctionFactor){
+        function calculateCorrectionInsulin(bloodSugar, targetBloodSugar, correctionFactor){
             if(!areItemsTypeofNumber(bloodSugar, targetBloodSugar, correctionFactor)){
                 if(bloodSugar !== '')
                     alert(ERROR_MESSAGE)
@@ -249,14 +314,15 @@ export default function App( {hideLoadingScreen} ) {
         }
 
         // correction insulin
-        const correctionInsulin = calculateCorrectionInsuline(bloodSugar, targetBloodSugar, correctionFactor)
+        const correctionInsulin = calculateCorrectionInsulin(bloodSugar, targetBloodSugar, correctionFactor)
         setTotalCorrectionInsulin(Math.round(correctionInsulin * 10) / 10)
 
         // total KE | totalIntermealKE
         let KE = 0, intermealKE = 0
         for(const foodItem of foodItems){
-            KE += calculateKE(foodItem)
-            intermealKE += foodItem.isIntermeal ? calculateKE(foodItem) : 0
+            const foodItemKE = calculateKE(foodItem)
+            KE += foodItemKE
+            intermealKE += foodItem.slide1.isIntermeal ? foodItemKE : 0
         }
         setTotalKE(Math.round(KE * 10) / 10)
         setTotalIntermealKE(Math.round(intermealKE * 10) / 10)
@@ -273,18 +339,25 @@ export default function App( {hideLoadingScreen} ) {
         IE = Math.round(IE * 10) / 10
 
         setTotalIE(IE)
-        outputRef.current.scrollIntoView({smooth:true})
+        
+        // needed because of async state setting
+        setTimeout(() => {
+            outputRef.current.scrollIntoView({smooth:true})
+        }, 5)
     }
     
     return (
         <div>
             <h1>Insulin Rechner</h1>
-
             <p>
-                <button
+                {/* <button
                     className='load-data-button'
                     onClick = {loadData}
-                >Daten laden</button>
+                >Daten laden</button> */}
+                <button
+                    className='clear-data-button'
+                    onClick = {clearData}
+                >Daten löschen</button>
             </p>
 
             <FixedInformationSection 
@@ -297,20 +370,23 @@ export default function App( {hideLoadingScreen} ) {
                 correctionFactor={correctionFactor}
                 carbohydrateFactor={carbohydrateFactor}
             />
+
             <ListSection 
                 foodItems={foodItems}
                 foodNameSuggestions={foodNameSuggestions}
                 addNewFoodItem={addNewFoodItem}
                 handleIsIntermealChange={handleIsIntermealChange}
-                handleChange={handleChange}
+                handleSlide1ValueChange={handleSlide1ValueChange}
+                handleSlide2ValueChange={handleSlide2ValueChange}
                 deleteFoodItem={deleteFoodItem}
                 handleSuggestionClick={handleSuggestionClick}
+                handleSlideChange={handleSlideChange}
             />
 
-            <button
+            {/* <button
                 className='save-data-button'
                 onClick = {saveData}
-            >Daten speichen</button>
+            >Daten speichen</button> */}
 
             <button 
                 className='calculateIE-button'

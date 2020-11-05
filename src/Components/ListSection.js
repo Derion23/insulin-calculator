@@ -8,9 +8,11 @@ export default function ListSection(
     foodNameSuggestions=[],
     addNewFoodItem, 
     handleIsIntermealChange, 
-    handleChange, 
+    handleSlide1ValueChange, 
+    handleSlide2ValueChange, 
     deleteFoodItem,
-    handleSuggestionClick
+    handleSuggestionClick,
+    handleSlideChange
     }) {
     return (
         <div>
@@ -20,16 +22,17 @@ export default function ListSection(
                 <FoodItem 
                     key={element.key}
                     id={element.id}
-                    name={element.name}
-                    grams={element.grams}
-                    carbohydratesPer100Grams={element.carbohydratesPer100Grams}
-                    isIntermeal={element.isIntermeal}
+                    activeSlideIdx={element.activeSlideIdx}
+                    slide1={element.slide1}
+                    slide2={element.slide2}
+                    
                     foodNameSuggestions={foodNameSuggestions}
-                    shouldDisplaySuggestions={element.shouldDisplaySuggestions}
                     handleIsIntermealChange={handleIsIntermealChange}
-                    handleChange={handleChange}
+                    handleSlide1ValueChange={handleSlide1ValueChange}
+                    handleSlide2ValueChange={handleSlide2ValueChange}
                     deleteFoodItem={deleteFoodItem}
                     handleSuggestionClick={handleSuggestionClick}
+                    handleSlideChange={handleSlideChange}
              />)}
              
             <p>
