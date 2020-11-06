@@ -30,7 +30,10 @@ export default function App() {
     const outputRef = useRef()
 
     useEffect(() => {
-        calculateIE()
+        // temporary
+        localStorage.removeItem('insulin-calculator-lastSavedData')
+
+        calculateIE(false)
     }, [])
     
 
@@ -286,7 +289,7 @@ export default function App() {
         return Number.isNaN(number) ? -1 : number
     }
 
-    function calculateIE(){
+    function calculateIE(shouldScroll = true){
         const ERROR_MESSAGE = 'ein oder mehrere Werte sind nicht gültig'
 
         function areItemsTypeofNumber(...items){
@@ -347,9 +350,10 @@ export default function App() {
         setTotalIE(IE)
         
         // needed because of async state setting
-        setTimeout(() => {
-            outputRef.current.scrollIntoView({smooth:true})
-        }, 5)
+        if(shouldScroll)
+            setTimeout(() => {
+                outputRef.current.scrollIntoView({smooth:true})
+            }, 5)
     }
     
     return (

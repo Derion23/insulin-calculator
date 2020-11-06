@@ -39,6 +39,7 @@ body{
     width: calc(var(--input-width) - 2 * var(--body-margin));
     border-radius: var(--input-border-radius);
     background-color: rgb(177, 177, 177);
+    z-index: 999;
 }
 
 li{
