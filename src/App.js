@@ -283,6 +283,8 @@ export default function App() {
     }
 
     function toNumberFormat(string){
+        if(typeof string !== 'string') return -1
+
         let stringCopy = string.slice()
         stringCopy = stringCopy.replace(',', '.')
         const number = parseFloat(stringCopy)
