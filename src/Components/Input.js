@@ -2,7 +2,8 @@ import React from 'react'
 
 import '../css/style.css'
 
-export default function Input({id, name='',value='', onChange='', description='', placeholder='', unit=''}) {
+export default function Input(
+    {id, type='text', name='',value='', onChange='', description='', placeholder='', unit=''}) {
     return (
         <div>
             <label> 
@@ -10,7 +11,7 @@ export default function Input({id, name='',value='', onChange='', description=''
             </label>
             <br />
             <input
-                type='text'
+                type={type}
                 autoComplete='off'
                 id={id}
                 name={name}

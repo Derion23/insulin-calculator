@@ -50,6 +50,7 @@ export default function FoodItem(
         <Input
             id = {id}
             name = 'grams'
+            type='number'
             description = 'Gramm'
             value = {slide1.grams}
             onChange = {(event) => handleSlide1ValueChange(event)}
@@ -57,6 +58,7 @@ export default function FoodItem(
         <Input
             id = {id}
             name = 'carbohydratesPer100Grams'
+            type='number'
             description = 'Kohlenhydrate pro 100g'
             value = {slide1.carbohydratesPer100Grams}
             onChange = {(event) => handleSlide1ValueChange(event)}
@@ -84,6 +86,7 @@ export default function FoodItem(
         <Input 
             id = {id}
             name = 'numberOfPieces'
+            type='number'
             description = 'Anzahl'
             value = {slide2.numberOfPieces}
             onChange = {(event) => handleSlide2ValueChange(event)}
@@ -92,6 +95,7 @@ export default function FoodItem(
         <Input 
             id = {id}
             name = 'carbohydratesPerPiece'
+            type='number'
             description = 'Kohlenhydrate pro Stück'
             value = {slide2.carbohydratesPerPiece}
             onChange = {(event) => handleSlide2ValueChange(event)}

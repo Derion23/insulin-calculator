@@ -56,7 +56,8 @@ h3{
     font-size: calc(var(--input-font-size) * 1.2);
 }
 
-input[type='text']{
+input[type='text'],
+input[type='number']{
     padding: 4px;
     padding-left: 8px;
     width: var(--input-width);
@@ -69,7 +70,8 @@ input[type='text']{
     border-radius: var(--input-border-radius);
 }
 
-input[type='text']:focus{
+input[type='text']:focus,
+input[type='number']:focus{
     border-color: transparent;
     box-shadow: 0 0 1px 2px rgb(228, 148, 0);
 }
