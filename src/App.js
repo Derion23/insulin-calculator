@@ -33,7 +33,7 @@ export default function App() {
         // temporary
         localStorage.removeItem('insulin-calculator-lastSavedData')
 
-        calculateIE(false)
+        calculateIE(false, false)
     }, [])
     
 
@@ -289,7 +289,7 @@ export default function App() {
         return Number.isNaN(number) ? -1 : number
     }
 
-    function calculateIE(shouldScroll = true){
+    function calculateIE(shouldScroll = true, shouldDisplayError = true){
         const ERROR_MESSAGE = 'ein oder mehrere Werte sind nicht gültig'
 
         function areItemsTypeofNumber(...items){
@@ -304,7 +304,8 @@ export default function App() {
             const carbohydratesPer100Grams = foodItem.slide1.carbohydratesPer100Grams
 
             if(!areItemsTypeofNumber(grams, carbohydratesPer100Grams)) {
-                alert(ERROR_MESSAGE)
+                if(shouldDisplayError)
+                    alert(ERROR_MESSAGE)
                 return 0
             }
 
@@ -313,7 +314,7 @@ export default function App() {
 
         function calculateCorrectionInsulin(bloodSugar, targetBloodSugar, correctionFactor){
             if(!areItemsTypeofNumber(bloodSugar, targetBloodSugar, correctionFactor)){
-                if(bloodSugar !== '')
+                if(bloodSugar !== '' && shouldDisplayError)
                     alert(ERROR_MESSAGE)
                 return 0
             }
@@ -339,7 +340,8 @@ export default function App() {
         
         // total IE
         if(!areItemsTypeofNumber(carbohydrateFactor)) {
-            alert(ERROR_MESSAGE)
+            if(shouldDisplayError)
+                alert(ERROR_MESSAGE)
             return -1
         }
 
@@ -365,10 +367,12 @@ export default function App() {
                     onClick = {loadData}
                 >Daten laden</button> */}
                 <button
-                    className='clear-data-button'
+                    className='clear-data-button space-around'
                     onClick = {clearData}
                 >Daten löschen</button>
             </p>
+
+            <hr className='destop-hr new-section-hr'/>
 
             <FixedInformationSection 
                 setBloodSugar={setBloodSugar}
@@ -380,6 +384,8 @@ export default function App() {
                 correctionFactor={correctionFactor}
                 carbohydrateFactor={carbohydrateFactor}
             />
+
+            <hr className='destop-hr new-section-hr'/>
 
             <ListSection 
                 foodItems={foodItems}
@@ -398,12 +404,13 @@ export default function App() {
                 onClick = {saveData}
             >Daten speichen</button> */}
 
-            <button 
-                className='calculateIE-button'
-                onClick={calculateIE}
-            >Berechne IE</button>
-            
-            
+            <p style={{marginBottom:'20px'}}>
+                <button 
+                    className='calculateIE-button'
+                    onClick={calculateIE}
+                >Berechne IE</button>
+            </p>
+
             <Output 
                 totalIE={totalIE}
                 totalMainMealKE={totalMainMealKE}

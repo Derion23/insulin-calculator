@@ -15,7 +15,7 @@ export default function FixedInformationSection(
     }) {
     
     return (
-        <div>
+        <div className='space-around'>
             <Input 
                 name = 'BloodSugar'
                 value = {bloodSugar.toString()}

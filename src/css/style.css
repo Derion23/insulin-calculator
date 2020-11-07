@@ -1,6 +1,6 @@
 *, *::before, *::after{
     box-sizing: border-box;
-    font-family: Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 :root{
@@ -12,10 +12,26 @@
     --input-width: 85%;
     --suggestion-list-padding: 10px;
     --body-margin: 8px;
+    --border-color-destop: rgba(163, 163, 163, 0.507);
+    --margin-destop: 12px;
+    --margin-left-destop: 16px;
 }
 
 body{
     margin: var(--body-margin);
+}
+
+hr,
+.destop-hr{
+    border: none;
+    height: 1px;
+    background-color: var(--border-color-destop);
+    margin-top: 20px;
+    margin-bottom: 17px; 
+}
+
+.destop-hr{
+    display: none;
 }
 
 /* SWIPER */
@@ -50,6 +66,8 @@ li{
 
 h1{
     text-align: center;
+    margin-top: 25px;
+    margin-bottom: 25px;
 }
 
 h3{
@@ -89,8 +107,7 @@ label{
 }
 
 .output{
-    font-size: 1.1rem;
-    font-weight: bold;
+    font-size: var(--input-font-size);
 }
 
 .calculateIE-button, 
@@ -114,11 +131,6 @@ label{
     background-color: rgb(211, 210, 210);
 }
 
-.load-data-button,
-.clear-data-button{
-    -ms-transform: translate(0%, 0%);
-    transform: translate(0%, 0%);
-}
 
 .save-data-button{
     float: left;
@@ -126,8 +138,8 @@ label{
 
 .calculateIE-button{
     left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, 0%);
+    transform: translate(-50%, 0%);
 }
 
 .delete-food-item-button{
@@ -163,12 +175,10 @@ label{
 }
 
 .add-new-food-item-button{
-    margin-top: calc(0.6 * var(--add-food-item-cell-size));
     position: relative;
-    top: 50%;
     left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, 0%);
+    transform: translate(-50%, 0%);
     width: var(--add-food-item-cell-size);
     height: var(--add-food-item-cell-size);
     border-radius: 50%;
@@ -193,5 +203,46 @@ button:focus{
 
 .add-new-food-item-button::after{
     transform: rotate(90deg);
+}
+
+
+@media only screen and (min-width: 700px) {
+    body {
+        margin-top: 30px;
+        margin-bottom: 30px;
+        margin-left: 180px;
+        width: 650px;
+        border: 1px solid var(--border-color-destop);
+        border-radius: 7px;
+    }
+
+    .destop-hr{
+        display: block;
+    }
+
+    .new-section-hr{
+        margin-top: 30px;
+        margin-bottom: 25px;
+    }
+
+    .suggestion-list{
+        width: 527px;
+    }
+    
+    .space-around{
+        margin-left: var(--margin-left-destop);
+        margin-right: var(--margin-destop);
+        margin-top: var(--margin-destop);
+        margin-bottom: var(--margin-destop);
+    }
+
+    h3{
+        margin-left: var(--margin-left-destop);
+    }
+
+    .clear-data-button{
+        margin-top: 0px;
+        margin-bottom: 0;
+    }
 }
 

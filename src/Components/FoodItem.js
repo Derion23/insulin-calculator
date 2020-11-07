@@ -106,31 +106,33 @@ export default function FoodItem(
 
     return (
         <div>
-            <button
-                className = 'delete-food-item-button'
-                onClick={() => deleteFoodItem(id)}
-            ></button>
+            <div className='space-around'>
+                <button
+                    className = 'delete-food-item-button'
+                    onClick={() => deleteFoodItem(id)}
+                ></button>
 
-            {slide1Html}
-            {/*  <Swiper 
-                id='main'
-                tag='section'
-                wrapperTag='ul'
-                pagination={{clickable:true}}
-                onSlideChange={(swiper) => handleSlideChange(id, swiper.activeIndex)}
-                >
-                {slides.map((slide, idx) => (
-                     <SwiperSlide 
-                        key={idx}
-                        tag='li'
-                        style= {{ listStyle: 'none' }}
-                        >
-                        {slide}
-                    </SwiperSlide>
-                ))}
-                
-            </Swiper> */}
+                {slide1Html}
+                {/*  <Swiper 
+                    id='main'
+                    tag='section'
+                    wrapperTag='ul'
+                    pagination={{clickable:true}}
+                    onSlideChange={(swiper) => handleSlideChange(id, swiper.activeIndex)}
+                    >
+                    {slides.map((slide, idx) => (
+                        <SwiperSlide 
+                            key={idx}
+                            tag='li'
+                            style= {{ listStyle: 'none' }}
+                            >
+                            {slide}
+                        </SwiperSlide>
+                    ))}
+                    
+                </Swiper> */}
 
+            </div>
             <hr />
         </div>
     )

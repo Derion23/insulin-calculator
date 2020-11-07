@@ -17,7 +17,6 @@ export default function ListSection(
     return (
         <div>
             <h3>Elemente</h3>
-
             {foodItems.map(element => 
                 <FoodItem 
                     key={element.key}
