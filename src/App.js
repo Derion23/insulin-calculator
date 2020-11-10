@@ -5,10 +5,12 @@ import './css/style.css'
 import FixedInformationSection from './Components/FixedInformationSection'
 import ListSection from './Components/ListSection'
 import Output from './Components/Output.js'
+
 import useLocalStorage from './hooks/useLocalStorage.js'
 
-
 const PREFIX = "insulin-calculator-"
+
+let hasRerenderedSince60sec = false
 
 export default function App() {
     const [lastSavedData, setLastSavedData] = useLocalStorage('lastSavedData')
@@ -30,12 +32,22 @@ export default function App() {
     const outputRef = useRef()
 
     useEffect(() => {
-        // temporary
-        localStorage.removeItem('insulin-calculator-lastSavedData')
-
         calculateIE(false, false)
+
+        // update every minute
+        setInterval(() => {
+            if(!hasRerenderedSince60sec)
+                refreshPage()
+            else
+                hasRerenderedSince60sec = false
+            
+        }, 60000);
     }, [])
-    
+
+
+    function refreshPage(){
+        window.location.reload();
+    }
 
     function handleSlideChange(id, activeSlideIdx){
         const newFoodItems = foodItems.map(foodItem => {
@@ -105,8 +117,9 @@ export default function App() {
 
         setFoodItems(foodItems)
 
-        // not working because of async state setting
-        calculateIE()
+        setTimeout(() => {
+            calculateIE(false, false)
+        }, 100)
     }
 
     function handleSuggestionClick(suggestionText, id){
@@ -115,9 +128,10 @@ export default function App() {
     }
 
     function getCurrentDayTime(){
-        const [hours, minutes] = new Date().toLocaleTimeString().split(':')
+         const [hours, minutes] = new Date().toLocaleTimeString().split(':')
         const time =  toNumberFormat(hours) + (toNumberFormat(minutes) / 60)
         let dayTime = ''
+        
         if(time <= 11.5){
             dayTime = 'morning'
         } else if(time <= 16){
@@ -125,6 +139,11 @@ export default function App() {
         } else {
             dayTime = 'evening'
         }
+
+        /* if(time < 21.9)
+            dayTime = 'midday'
+        else
+            dayTime = 'evening' */
 
         return dayTime
     }
@@ -352,7 +371,7 @@ export default function App() {
         IE = Math.round(IE * 10) / 10
 
         setTotalIE(IE)
-        
+
         // needed because of async state setting
         if(shouldScroll)
             setTimeout(() => {
@@ -362,16 +381,19 @@ export default function App() {
     
     return (
         <div>
+            {hasRerenderedSince60sec = true}
+            
             <h1>Insulin Rechner</h1>
             <p>
-                {/* <button
-                    className='load-data-button'
-                    onClick = {loadData}
-                >Daten laden</button> */}
                 <button
                     className='clear-data-button space-around'
                     onClick = {clearData}
-                >Daten löschen</button>
+                    >Daten löschen</button>
+
+                <button
+                    className='load-data-button'
+                    onClick = {loadData}
+                >Daten laden</button>
             </p>
 
             <hr className='destop-hr new-section-hr'/>
@@ -401,12 +423,12 @@ export default function App() {
                 handleSlideChange={handleSlideChange}
             />
 
-            {/* <button
-                className='save-data-button'
-                onClick = {saveData}
-            >Daten speichen</button> */}
-
             <p style={{marginBottom:'20px'}}>
+                <button
+                    className='save-data-button space-around'
+                    onClick = {saveData}
+                >Daten speichen</button>
+
                 <button 
                     className='calculateIE-button'
                     onClick={calculateIE}

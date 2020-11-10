@@ -131,16 +131,11 @@ label{
     background-color: rgb(211, 210, 210);
 }
 
-
-.save-data-button{
-    float: left;
-}
-
-.calculateIE-button{
-    left: 50%;
+/* .calculateIE-button{
+    
     -ms-transform: translate(-50%, 0%);
     transform: translate(-50%, 0%);
-}
+} */
 
 .delete-food-item-button{
     margin: 0;

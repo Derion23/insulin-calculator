@@ -5,12 +5,12 @@ import '../css/style.css'
 export default function Output(
     {totalIE, totalMainMealKE, totalIntermealKE, totalKE, totalCorrectionInsulin, outputRef}) {
     return (
-        <div>
+        <div ref={outputRef}>
             {!(totalIE === '' || totalIE == undefined || totalIE <= 0) ? 
                 <div>
                     <hr />
 
-                    <div ref={outputRef} className='space-around'>
+                    <div className='space-around'>
                         
                         <p className='output' >
                             Hauptmahlzeit-KE : {totalMainMealKE} KE <br />
