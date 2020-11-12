@@ -11,25 +11,25 @@ SwiperCore.use([Pagination])
 
 export default function FoodItem(
     {id, 
-    activeSlideIdx,
-    slide1,
-    slide2,
+    isPer100gSlideActive=true,
+    per100gSlide={},
+    perPieceSlide={},
 
     foodNameSuggestions,
     handleIsIntermealChange, 
-    handleSlide1ValueChange,
-    handleSlide2ValueChange,
+    handlePer100gSlideValueChange,
+    handlePerPieceSlideValueChange,
     deleteFoodItem,
     handleSuggestionClick,
     handleSlideChange
     }) {
 
-    const slide1Html = 
+    const per100gSlideHtml = 
     <>
         <label className='intermeal-checkbox'>
                 <input
                     type = 'checkbox'
-                    checked = {slide1.isIntermeal}
+                    checked = {per100gSlide.isIntermeal}
                     onChange = {() => handleIsIntermealChange(id, 1)}
                 ></input> ZM?
         </label>
@@ -38,12 +38,12 @@ export default function FoodItem(
             id = {id}
             name = 'name'
             description = 'Name'
-            value = {slide1.name}
-            onChange = {(event) => handleSlide1ValueChange(event)}
+            value = {per100gSlide.name}
+            onChange = {(event) => handlePer100gSlideValueChange(event)}
         />
-        {slide1.shouldDisplaySuggestions && <SuggestionList 
+        {per100gSlide.shouldDisplaySuggestions && <SuggestionList 
             allSuggestions={foodNameSuggestions}
-            searchingText={slide1.name}
+            searchingText={per100gSlide.name}
             handleSuggestionClick={(suggestionText) => handleSuggestionClick(suggestionText, id)}
         />}
 
@@ -52,25 +52,25 @@ export default function FoodItem(
             name = 'grams'
             type='number'
             description = 'Gramm'
-            value = {slide1.grams}
-            onChange = {(event) => handleSlide1ValueChange(event)}
+            value = {per100gSlide.grams}
+            onChange = {(event) => handlePer100gSlideValueChange(event)}
         />
         <Input
             id = {id}
             name = 'carbohydratesPer100Grams'
             type='number'
             description = 'Kohlenhydrate pro 100g'
-            value = {slide1.carbohydratesPer100Grams}
-            onChange = {(event) => handleSlide1ValueChange(event)}
+            value = {per100gSlide.carbohydratesPer100Grams}
+            onChange = {(event) => handlePer100gSlideValueChange(event)}
         />
     </>
 
-    const slide2Html = 
+    const perPieceSlideHtml = 
     <>
          <label className='intermeal-checkbox'>
                 <input
                     type = 'checkbox'
-                    checked = {slide2.isIntermeal}
+                    checked = {perPieceSlide.isIntermeal}
                     onChange = {() => handleIsIntermealChange(id, 2)}
                 ></input> ZM?
         </label>
@@ -79,8 +79,8 @@ export default function FoodItem(
             id = {id}
             name = 'name'
             description = 'Name'
-            value = {slide2.name}
-            onChange = {(event) => handleSlide2ValueChange(event)}
+            value = {perPieceSlide.name}
+            onChange = {(event) => handlePerPieceSlideValueChange(event)}
         />
 
         <Input 
@@ -88,8 +88,8 @@ export default function FoodItem(
             name = 'numberOfPieces'
             type='number'
             description = 'Anzahl'
-            value = {slide2.numberOfPieces}
-            onChange = {(event) => handleSlide2ValueChange(event)}
+            value = {perPieceSlide.numberOfPieces}
+            onChange = {(event) => handlePerPieceSlideValueChange(event)}
         />
 
         <Input 
@@ -97,22 +97,35 @@ export default function FoodItem(
             name = 'carbohydratesPerPiece'
             type='number'
             description = 'Kohlenhydrate pro Stück'
-            value = {slide2.carbohydratesPerPiece}
-            onChange = {(event) => handleSlide2ValueChange(event)}
+            value = {perPieceSlide.carbohydratesPerPiece}
+            onChange = {(event) => handlePerPieceSlideValueChange(event)}
         />
     </>
 
-    const slides = [slide1Html, slide2Html]
+    const slides = [per100gSlideHtml, perPieceSlideHtml]
 
     return (
         <div>
+            <p className='center-elements'>
+                <button
+                    className={`per-100g-button ${isPer100gSlideActive && 'active-button'}`}
+                    onClick={() => handleSlideChange(id, true)}
+                >pro 100g</button>
+                
+                <button
+                    className={`per-piece-button ${!isPer100gSlideActive && 'active-button'}`}
+                    onClick={() => handleSlideChange(id, false)}
+                >pro Stück</button>
+            </p>
+
             <div className='space-around'>
                 <button
                     className = 'delete-food-item-button'
                     onClick={() => deleteFoodItem(id)}
                 ></button>
 
-                {slide1Html}
+                {isPer100gSlideActive ? per100gSlideHtml : perPieceSlideHtml}
+
                 {/*  <Swiper 
                     id='main'
                     tag='section'

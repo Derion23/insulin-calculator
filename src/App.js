@@ -32,7 +32,14 @@ export default function App() {
     const outputRef = useRef()
 
     useEffect(() => {
-        calculateIE(false, false)
+        setFoodItems( correctFoodItems(foodItems) )
+        setLastSavedData( correctLastSavedData() )
+
+        // not working has some old state of foodItems even if the state has changed
+        /* setTimeout(() => 
+            calculateIE(false, false)
+        , 100) */
+        
 
         // update every minute
         setInterval(() => {
@@ -44,17 +51,46 @@ export default function App() {
         }, 60000);
     }, [])
 
+    function correctFoodItems(foodItemsArg){
+        const newFoodItems = foodItemsArg.map(foodItem => {
+            if(foodItem.slide1 == null) return foodItem
+
+            let {
+                activeSlideIdx:isPer100gSlideActive,
+                slide1:per100gSlide,
+                slide2:perPieceSlide 
+            } = foodItem
+            
+            delete foodItem.slide1
+            delete foodItem.slide2
+            delete foodItem.activeSlideIdx
+
+            isPer100gSlideActive = isPer100gSlideActive === 1
+            
+            return {
+                ...foodItem,
+                isPer100gSlideActive: isPer100gSlideActive,
+                per100gSlide: per100gSlide,
+                perPieceSlide: perPieceSlide
+            }
+        })
+        return newFoodItems
+    }
+
+    function correctLastSavedData(){
+        const newLastSavedData = {foodItems: correctFoodItems(lastSavedData.foodItems)}
+        return newLastSavedData
+    }
+
 
     function refreshPage(){
         window.location.reload();
     }
 
-    function handleSlideChange(id, activeSlideIdx){
+    function handleSlideChange(id, isPer100gSlideActive){
         const newFoodItems = foodItems.map(foodItem => {
             if(id == foodItem.id){
-                const slide1 = {...foodItem.slide1}
-                const slide2 = {...foodItem.slide2}
-                return {...foodItem, slide1:slide1, slide2:slide2, activeSlideIdx: activeSlideIdx + 1}
+                return {...foodItem, isPer100gSlideActive:  isPer100gSlideActive}
             }
             
             return foodItem
@@ -124,7 +160,7 @@ export default function App() {
 
     function handleSuggestionClick(suggestionText, id){
         const event = {target:{name:'name', value:suggestionText, id:id}}
-        handleSlide1ValueChange(event)
+        handlePer100gSlideValueChange(event)
     }
 
     function getCurrentDayTime(){
@@ -140,11 +176,6 @@ export default function App() {
             dayTime = 'evening'
         }
 
-        /* if(time < 21.9)
-            dayTime = 'midday'
-        else
-            dayTime = 'evening' */
-
         return dayTime
     }
 
@@ -153,15 +184,15 @@ export default function App() {
         const newFoodItems = [...foodItems, {
             key: Math.random(),
             id: id,
-            activeSlideIdx: 1,
-            slide1: {
+            isPer100gSlideActive: true,
+            per100gSlide: {
                 name: '',
                 grams: '',
                 carbohydratesPer100Grams: '',
                 isIntermeal: false,
                 shouldDisplaySuggestions: true
             },
-            slide2: {
+            perPieceSlide: {
                 name: '',
                 numberOfPieces: '',
                 carbohydratesPerPiece: '',
@@ -186,11 +217,10 @@ export default function App() {
         setFoodItems(newFoodItems)
     }
 
-    function handleSlide1ValueChange(event){
+    function handlePer100gSlideValueChange(event){
         const {name, value, id} = event.target
 
         if(value[value.length - 1] === '-') return
-
         const newFoodItems = foodItems.map(foodItem => {
             // would not work with !==
             if(id != foodItem.id) return foodItem
@@ -203,20 +233,20 @@ export default function App() {
                 if(jsonValue != null){
                     const carbohydratesPer100Grams = JSON.parse(jsonValue)
 
-                    const slide1 = {...foodItem.slide1, [name]:value, shouldDisplaySuggestions: false,
+                    const per100gSlide = {...foodItem.per100gSlide, [name]:value, shouldDisplaySuggestions: false,
                         carbohydratesPer100Grams: carbohydratesPer100Grams}
 
-                    return {...foodItem, slide1:slide1}
+                    return {...foodItem, per100gSlide:per100gSlide}
                 }
             }
             
             // storing the carbohydratesPer100Grams with name as a key in localStorage
             // storing a new foodNameSuggestion in localStorage
-            const isNameValid = foodItem.slide1.name !== '' && foodItem.slide1.name != null 
-                                && foodItem.slide1.name[0] !== '.'
+            const isNameValid = foodItem.per100gSlide.name !== '' && foodItem.per100gSlide.name != null 
+                                && foodItem.per100gSlide.name[0] !== '.'
             if(name === 'carbohydratesPer100Grams' && isNameValid){
-                const prefixedKey = `${PREFIX}foodItem-${foodItem.slide1.name.toLowerCase()}-carbohydratesPer100Grams`
-                const newFoodNameSuggestion = capitalize(foodItem.slide1.name.toLowerCase())
+                const prefixedKey = `${PREFIX}foodItem-${foodItem.per100gSlide.name.toLowerCase()}-carbohydratesPer100Grams`
+                const newFoodNameSuggestion = capitalize(foodItem.per100gSlide.name.toLowerCase())
                 if(value !== '') {
                     // store foodItems carbohydratesPer100Grams
                     localStorage.setItem(prefixedKey, JSON.stringify(value))
@@ -229,13 +259,13 @@ export default function App() {
                 }
             }
             const hasNameChanged = name === 'name'
-            const slide1 = {...foodItem.slide1, [name]:value, shouldDisplaySuggestions: hasNameChanged}
-            return {...foodItem, slide1:slide1}
+            const per100gSlide = {...foodItem.per100gSlide, [name]:value, shouldDisplaySuggestions: hasNameChanged}
+            return {...foodItem, per100gSlide:per100gSlide}
         })
         setFoodItems(newFoodItems)
     }
 
-    function handleSlide2ValueChange(event){
+    function handlePerPieceSlideValueChange(event){
         const {name, value, id} = event.target
 
         if(value[value.length - 1] === '-') return
@@ -252,20 +282,20 @@ export default function App() {
                 if(jsonValue != null){
                     const carbohydratesPerPiece = JSON.parse(jsonValue)
 
-                    const slide2 = {...foodItem.slide2, [name]:value, shouldDisplaySuggestions: false,
+                    const perPieceSlide = {...foodItem.perPieceSlide, [name]:value, shouldDisplaySuggestions: false,
                         carbohydratesPerPiece: carbohydratesPerPiece}
 
-                    return {...foodItem, slide2:slide2}
+                    return {...foodItem, perPieceSlide:perPieceSlide}
                 }
             }
             
             // storing the carbohydratesPerPiece with name as a key in localStorage
             // storing a new foodNameSuggestion in localStorage
-            const isNameValid = foodItem.slide2.name !== '' && foodItem.slide2.name != null 
-                                && foodItem.slide2.name[0] !== '.'
+            const isNameValid = foodItem.perPieceSlide.name !== '' && foodItem.perPieceSlide.name != null 
+                                && foodItem.perPieceSlide.name[0] !== '.'
             if(name === 'carbohydratesPerPiece' && isNameValid){
-                const prefixedKey = `${PREFIX}foodItem-${foodItem.slide2.name.toLowerCase()}-carbohydratesPerPiece`
-                const newFoodNameSuggestion = capitalize(foodItem.slide2.name.toLowerCase())
+                const prefixedKey = `${PREFIX}foodItem-${foodItem.perPieceSlide.name.toLowerCase()}-carbohydratesPerPiece`
+                const newFoodNameSuggestion = capitalize(foodItem.perPieceSlide.name.toLowerCase())
                 if(value !== '') {
                     // store foodItems carbohydratesPerPiece
                     localStorage.setItem(prefixedKey, JSON.stringify(value))
@@ -278,8 +308,8 @@ export default function App() {
                 }
             }
             const hasNameChanged = name === 'name'
-            const slide2 = {...foodItem.slide2, [name]:value, shouldDisplaySuggestions: hasNameChanged}
-            return {...foodItem, slide2:slide2}
+            const perPieceSlide = {...foodItem.perPieceSlide, [name]:value, shouldDisplaySuggestions: hasNameChanged}
+            return {...foodItem, perPieceSlide:perPieceSlide}
         })
         setFoodItems(newFoodItems)
     }
@@ -288,11 +318,11 @@ export default function App() {
         const newFoodItems = foodItems.map(foodItem => {
             if(id == foodItem.id){
                 if(activeSlideIdx === 1){
-                    const slide1 = {...foodItem.slide1, isIntermeal: !foodItem.slide1.isIntermeal}
-                    return {...foodItem, slide1:slide1}
+                    const per100gSlide = {...foodItem.per100gSlide, isIntermeal: !foodItem.per100gSlide.isIntermeal}
+                    return {...foodItem, per100gSlide:per100gSlide}
                 } else {
-                    const slide2 = {...foodItem.slide2, isIntermeal: !foodItem.slide2.isIntermeal}
-                    return {...foodItem, slide2:slide2}
+                    const perPieceSlide = {...foodItem.perPieceSlide, isIntermeal: !foodItem.perPieceSlide.isIntermeal}
+                    return {...foodItem, perPieceSlide:perPieceSlide}
                 }
             }
                 
@@ -321,16 +351,29 @@ export default function App() {
         }
 
         function calculateKE(foodItem){
-            const grams = foodItem.slide1.grams
-            const carbohydratesPer100Grams = foodItem.slide1.carbohydratesPer100Grams
+            if(foodItem.isPer100gSlideActive){
+                const grams = foodItem.per100gSlide.grams
+                const carbohydratesPer100Grams = foodItem.per100gSlide.carbohydratesPer100Grams
 
-            if(!areItemsTypeofNumber(grams, carbohydratesPer100Grams)) {
-                if(shouldDisplayError)
-                    alert(ERROR_MESSAGE)
-                return 0
+                if(!areItemsTypeofNumber(grams, carbohydratesPer100Grams)) {
+                    if(shouldDisplayError)
+                        alert(ERROR_MESSAGE)
+                    return 0
+                }
+
+                return (toNumberFormat(grams) * (toNumberFormat(carbohydratesPer100Grams) / 100)) / 10
+            } else {
+                const numberOfPieces = foodItem.perPieceSlide.numberOfPieces
+                const carbohydratesPerPiece = foodItem.perPieceSlide.carbohydratesPerPiece
+                
+                if(!areItemsTypeofNumber(numberOfPieces, carbohydratesPerPiece)) {
+                    if(shouldDisplayError)
+                        alert(ERROR_MESSAGE)
+                    return 0
+                }
+
+                return toNumberFormat(numberOfPieces) * toNumberFormat(carbohydratesPerPiece) / 10
             }
-
-            return (toNumberFormat(grams) * (toNumberFormat(carbohydratesPer100Grams) / 100)) / 10
         }
 
         function calculateCorrectionInsulin(bloodSugar, targetBloodSugar, correctionFactor){
@@ -353,7 +396,10 @@ export default function App() {
         for(const foodItem of foodItems){
             const foodItemKE = calculateKE(foodItem)
             KE += foodItemKE
-            intermealKE += foodItem.slide1.isIntermeal ? foodItemKE : 0
+            if(foodItem.isPer100gSlideActive)
+                intermealKE += foodItem.per100gSlide.isIntermeal ? foodItemKE : 0
+            else
+                intermealKE += foodItem.perPieceSlide.isIntermeal ? foodItemKE : 0
         }
         setTotalKE(Math.round(KE * 10) / 10)
         setTotalIntermealKE(Math.round(intermealKE * 10) / 10)
@@ -416,8 +462,8 @@ export default function App() {
                 foodNameSuggestions={foodNameSuggestions}
                 addNewFoodItem={addNewFoodItem}
                 handleIsIntermealChange={handleIsIntermealChange}
-                handleSlide1ValueChange={handleSlide1ValueChange}
-                handleSlide2ValueChange={handleSlide2ValueChange}
+                handlePer100gSlideValueChange={handlePer100gSlideValueChange}
+                handlePerPieceSlideValueChange={handlePerPieceSlideValueChange}
                 deleteFoodItem={deleteFoodItem}
                 handleSuggestionClick={handleSuggestionClick}
                 handleSlideChange={handleSlideChange}

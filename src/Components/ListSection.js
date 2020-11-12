@@ -8,8 +8,8 @@ export default function ListSection(
     foodNameSuggestions=[],
     addNewFoodItem, 
     handleIsIntermealChange, 
-    handleSlide1ValueChange, 
-    handleSlide2ValueChange, 
+    handlePer100gSlideValueChange, 
+    handlePerPieceSlideValueChange, 
     deleteFoodItem,
     handleSuggestionClick,
     handleSlideChange
@@ -21,14 +21,14 @@ export default function ListSection(
                 <FoodItem 
                     key={element.key}
                     id={element.id}
-                    activeSlideIdx={element.activeSlideIdx}
-                    slide1={element.slide1}
-                    slide2={element.slide2}
+                    isPer100gSlideActive={element.isPer100gSlideActive}
+                    per100gSlide={element.per100gSlide}
+                    perPieceSlide={element.perPieceSlide}
                     
                     foodNameSuggestions={foodNameSuggestions}
                     handleIsIntermealChange={handleIsIntermealChange}
-                    handleSlide1ValueChange={handleSlide1ValueChange}
-                    handleSlide2ValueChange={handleSlide2ValueChange}
+                    handlePer100gSlideValueChange={handlePer100gSlideValueChange}
+                    handlePerPieceSlideValueChange={handlePerPieceSlideValueChange}
                     deleteFoodItem={deleteFoodItem}
                     handleSuggestionClick={handleSuggestionClick}
                     handleSlideChange={handleSlideChange}

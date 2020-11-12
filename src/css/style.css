@@ -6,7 +6,7 @@
 :root{
     --add-food-item-cell-size: 45px;
     --delete-food-item-cell-size: 30px;
-    --mark-size: calc(var(--add-food-item-cell-size) * .9);
+    --mark-size: calc(var(--add-food-item-cell-size) * 0.9);
     --input-font-size: 1.15rem;
     --input-border-radius: 10px;
     --input-width: 85%;
@@ -151,6 +151,30 @@ label{
     font-size: 1.1rem;
 }
 
+.per-100g-button,
+.per-piece-button{
+    border: 1px solid var(--border-color-destop);
+    border-radius: 7px;
+    padding: 7px;
+    background-color: whitesmoke;
+}
+
+.per-100g-button{
+    margin-right: 15px;
+}
+
+.active-button{
+    background-color: rgb(0, 140, 255);
+    color: white;
+}
+
+.center-elements{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    margin-top: 0;
+    margin-bottom: 5px;
+}
 
 .delete-food-item-button::before,
 .delete-food-item-button::after{
@@ -192,7 +216,7 @@ button:focus{
     content:"";
     background-color: black;
     position: absolute;
-    width: calc(var(--mark-size) * 0.095);
+    width: calc(var(--mark-size) * 0.080);
     height: calc(var(--mark-size) * 0.8);
 }
 
