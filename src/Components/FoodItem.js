@@ -125,6 +125,14 @@ export default function FoodItem(
                 ></button>
 
                 {isPer100gSlideActive ? per100gSlideHtml : perPieceSlideHtml}
+                {/* <p className='slides-container'>
+                    <div className='per-100g-slide-container'>
+                        {per100gSlideHtml}
+                    </div>
+                    <div className='per-piece-slide-container'>
+                        {perPieceSlideHtml}
+                    </div>
+                </p> */}
 
                 {/*  <Swiper 
                     id='main'

@@ -34,6 +34,21 @@ hr,
     display: none;
 }
 
+.slides-container{
+    width: 200%;
+}
+
+.per-100g-slide-container,
+.per-piece-slide-container{
+    float: left;
+    width: 50%;
+}
+
+.per-piece-slide-container{
+    transform: translateX(10%);
+}
+
+
 /* SWIPER */
 .swiper-container{
     

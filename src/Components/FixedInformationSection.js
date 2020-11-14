@@ -18,6 +18,7 @@ export default function FixedInformationSection(
         <div className='space-around'>
             <Input 
                 name = 'BloodSugar'
+                type='number'
                 value = {bloodSugar.toString()}
                 description = 'Blutzucker'
                 unit = 'mg/dl'
@@ -25,6 +26,7 @@ export default function FixedInformationSection(
             />
             <Input 
                 name = 'TargetBloodSugar'
+                type='number'
                 value = {targetBloodSugar}
                 description = 'Blutzucker Zielwert'
                 unit = 'mg/dl'
@@ -32,6 +34,7 @@ export default function FixedInformationSection(
             />
             <Input 
                 name = 'CorrectionFactor'
+                type='number'
                 value = {correctionFactor}
                 description = 'Korrektur-Faktor'
                 unit = 'mg/dl'
@@ -39,6 +42,7 @@ export default function FixedInformationSection(
             />
             <Input 
                 name = 'CarbohydrateFactor'
+                type='number'
                 value = {carbohydrateFactor}
                 description = 'KE-Faktor'
                 onChange = {(event) => setCarbohydrateFactor(event.target.value)}

@@ -13,7 +13,7 @@ const PREFIX = "insulin-calculator-"
 let hasRerenderedSince60sec = false
 
 export default function App() {
-    const [lastSavedData, setLastSavedData] = useLocalStorage('lastSavedData')
+    const [lastSavedData, setLastSavedData] = useLocalStorage('lastSavedData', {foodItems:[]})
     const [foodNameSuggestions, setFoodNameSuggestions] = useLocalStorage('foodNameSuggestions', [])
 
     const [bloodSugar, setBloodSugar] = useState('')
