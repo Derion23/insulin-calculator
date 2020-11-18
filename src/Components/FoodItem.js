@@ -15,7 +15,8 @@ export default function FoodItem(
     per100gSlide={},
     perPieceSlide={},
 
-    foodNameSuggestions,
+    foodNameSuggestionsForPer100gSlide,
+    foodNameSuggestionsForPerPieceSlide,
     handleIsIntermealChange, 
     handlePer100gSlideValueChange,
     handlePerPieceSlideValueChange,
@@ -42,7 +43,7 @@ export default function FoodItem(
             onChange = {(event) => handlePer100gSlideValueChange(event)}
         />
         {per100gSlide.shouldDisplaySuggestions && <SuggestionList 
-            allSuggestions={foodNameSuggestions}
+            allSuggestions={foodNameSuggestionsForPer100gSlide}
             searchingText={per100gSlide.name}
             handleSuggestionClick={(suggestionText) => handleSuggestionClick(suggestionText, id)}
         />}
@@ -82,6 +83,11 @@ export default function FoodItem(
             value = {perPieceSlide.name}
             onChange = {(event) => handlePerPieceSlideValueChange(event)}
         />
+        {perPieceSlide.shouldDisplaySuggestions && <SuggestionList 
+            allSuggestions={foodNameSuggestionsForPerPieceSlide}
+            searchingText={perPieceSlide.name}
+            handleSuggestionClick={(suggestionText) => handleSuggestionClick(suggestionText, id, isPer100gSlideActive)}
+        />}
 
         <Input 
             id = {id}
@@ -125,34 +131,6 @@ export default function FoodItem(
                 ></button>
 
                 {isPer100gSlideActive ? per100gSlideHtml : perPieceSlideHtml}
-                {/* <p className='slides-container'>
-                    <div className='per-100g-slide-container'>
-                        {per100gSlideHtml}
-                    </div>
-                    <div className='per-piece-slide-container'>
-                        {perPieceSlideHtml}
-                    </div>
-                </p> */}
-
-                {/*  <Swiper 
-                    id='main'
-                    tag='section'
-                    wrapperTag='ul'
-                    pagination={{clickable:true}}
-                    onSlideChange={(swiper) => handleSlideChange(id, swiper.activeIndex)}
-                    >
-                    {slides.map((slide, idx) => (
-                        <SwiperSlide 
-                            key={idx}
-                            tag='li'
-                            style= {{ listStyle: 'none' }}
-                            >
-                            {slide}
-                        </SwiperSlide>
-                    ))}
-                    
-                </Swiper> */}
-
             </div>
             <hr />
         </div>

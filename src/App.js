@@ -15,6 +15,11 @@ let hasRerenderedSince60sec = false
 export default function App() {
     const [lastSavedData, setLastSavedData] = useLocalStorage('lastSavedData', {foodItems:[]})
     const [foodNameSuggestions, setFoodNameSuggestions] = useLocalStorage('foodNameSuggestions', [])
+    const [foodNameSuggestionsForPer100gSlide, setFoodNameSuggestionsForPer100gSlide] = 
+        useLocalStorage('foodNameSuggestions-per100gSlide', [])
+
+    const [foodNameSuggestionsForPerPieceSlide, setFoodNameSuggestionsForPerPieceSlide] = 
+        useLocalStorage('foodNameSuggestions-perPieceSlide', [])
 
     const [bloodSugar, setBloodSugar] = useState('')
     const [targetBloodSugar, setTargetBloodSugar] = useLocalStorage(`${getCurrentDayTime()}-targetBloodSugar`)
@@ -32,14 +37,18 @@ export default function App() {
     const outputRef = useRef()
 
     useEffect(() => {
-        setFoodItems( correctFoodItems(foodItems) )
-        setLastSavedData( correctLastSavedData() )
+        /* setFoodItems( correctFoodItems(foodItems) )
+        setLastSavedData( correctLastSavedData() ) */
 
         // not working has some old state of foodItems even if the state has changed
         /* setTimeout(() => 
             calculateIE(false, false)
         , 100) */
+
+        localStorage.removeItem(`${PREFIX}foodNameSuggestions`)
+        prefillFoodNameSuggestionsForPer100gSlide()
         
+        addAllFoodItemsInLocalStorageToFoodNameSuggestionsForPerPieceSlide()
 
         // update every minute
         setInterval(() => {
@@ -51,7 +60,43 @@ export default function App() {
         }, 60000);
     }, [])
 
-    function correctFoodItems(foodItemsArg){
+    function addAllFoodItemsInLocalStorageToFoodNameSuggestionsForPerPieceSlide(){
+        const allFoodItemsInLocalStorage = getAllPerPieceFoodItemsInLocalStorage()
+
+        addNewFoodNameSuggestionsToPerPieceSlide(allFoodItemsInLocalStorage)
+    }
+    
+    function getAllPerPieceFoodItemsInLocalStorage(){
+        const everyKey = Object.keys(localStorage)
+        const allFoodItemKeysInLocalStorage = []
+        
+        for(const key of everyKey){
+            const wordsInKey = key.split('-')
+            if(wordsInKey.length < 4) continue
+    
+            const hasCorrectPrefix = `${PREFIX}foodItem` === `${wordsInKey[0]}-${wordsInKey[1]}-${wordsInKey[2]}` &&
+                wordsInKey[4] === 'carbohydratesPerPiece'
+
+            if(hasCorrectPrefix){
+                const foodItemKey = capitalize(wordsInKey[3])
+                allFoodItemKeysInLocalStorage.push(foodItemKey)
+            }
+        }
+    
+        return allFoodItemKeysInLocalStorage
+    }
+
+    function prefillFoodNameSuggestionsForPer100gSlide(){
+        const prefixedKey = `${PREFIX}foodNameSuggestions`
+        const jsonValue = localStorage.getItem(prefixedKey)
+
+        if(jsonValue == null) return
+
+        const value = JSON.parse(jsonValue)
+        setFoodNameSuggestionsForPer100gSlide(value)
+    }
+
+    /* function correctFoodItems(foodItemsArg){
         const newFoodItems = foodItemsArg.map(foodItem => {
             if(foodItem.slide1 == null) return foodItem
 
@@ -80,7 +125,7 @@ export default function App() {
     function correctLastSavedData(){
         const newLastSavedData = {foodItems: correctFoodItems(lastSavedData.foodItems)}
         return newLastSavedData
-    }
+    } */
 
 
     function refreshPage(){
@@ -104,35 +149,64 @@ export default function App() {
         return capitalizedString
     }
 
-    function addNewFoodNameSuggestions(toAddFoodNameSuggestions){
+    function addNewFoodNameSuggestionsToPer100gSlide(toAddFoodNameSuggestions){
         let newFoodNameSuggestions = toAddFoodNameSuggestions
-
         if(!Array.isArray(toAddFoodNameSuggestions)) newFoodNameSuggestions = [toAddFoodNameSuggestions]
 
         newFoodNameSuggestions = newFoodNameSuggestions.filter(NewFoodNameSuggestion => {
-            const isAlreadyExisting = foodNameSuggestions.some(foodNameSuggestion => 
+            const isAlreadyExisting = foodNameSuggestionsForPer100gSlide.some(foodNameSuggestion => 
                 NewFoodNameSuggestion === foodNameSuggestion)
             return !isAlreadyExisting
         })
         if(newFoodNameSuggestions.length === 0) return
 
-        newFoodNameSuggestions = [...foodNameSuggestions, ...newFoodNameSuggestions]
-        setFoodNameSuggestions(newFoodNameSuggestions)
+        newFoodNameSuggestions = [...foodNameSuggestionsForPer100gSlide, ...newFoodNameSuggestions]
+        setFoodNameSuggestionsForPer100gSlide(newFoodNameSuggestions)
     }
 
-    function deleteFoodNameSuggestion(toDeleteFoodNameSuggestion){
+    function deleteFoodNameSuggestionFromPer100gSlide(toDeleteFoodNameSuggestion){
         let removeIdx
-        for(let idx = 0; idx < foodNameSuggestions.length; idx++){
-            if(toDeleteFoodNameSuggestion === foodNameSuggestions[idx]){
+        for(let idx = 0; idx < foodNameSuggestionsForPer100gSlide.length; idx++){
+            if(toDeleteFoodNameSuggestion === foodNameSuggestionsForPer100gSlide[idx]){
                 removeIdx = idx
                 break
             }
         }
         if(removeIdx == null) return
 
-        const newFoodNameSuggestions = [...foodNameSuggestions]
+        const newFoodNameSuggestions = [...foodNameSuggestionsForPer100gSlide]
         newFoodNameSuggestions.splice(removeIdx, 1)
-        setFoodNameSuggestions(newFoodNameSuggestions)
+        setFoodNameSuggestionsForPer100gSlide(newFoodNameSuggestions)
+    }
+
+    function addNewFoodNameSuggestionsToPerPieceSlide(toAddFoodNameSuggestions){
+        let newFoodNameSuggestions = toAddFoodNameSuggestions
+        if(!Array.isArray(toAddFoodNameSuggestions)) newFoodNameSuggestions = [toAddFoodNameSuggestions]
+
+        newFoodNameSuggestions = newFoodNameSuggestions.filter(NewFoodNameSuggestion => {
+            const isAlreadyExisting = foodNameSuggestionsForPerPieceSlide.some(foodNameSuggestion => 
+                NewFoodNameSuggestion === foodNameSuggestion)
+            return !isAlreadyExisting
+        })
+        if(newFoodNameSuggestions.length === 0) return
+
+        newFoodNameSuggestions = [...foodNameSuggestionsForPerPieceSlide, ...newFoodNameSuggestions]
+        setFoodNameSuggestionsForPerPieceSlide(newFoodNameSuggestions)
+    }
+
+    function deleteFoodNameSuggestionFromPerPieceSlide(toDeleteFoodNameSuggestion){
+        let removeIdx
+        for(let idx = 0; idx < foodNameSuggestionsForPerPieceSlide.length; idx++){
+            if(toDeleteFoodNameSuggestion === foodNameSuggestionsForPerPieceSlide[idx]){
+                removeIdx = idx
+                break
+            }
+        }
+        if(removeIdx == null) return
+
+        const newFoodNameSuggestions = [...foodNameSuggestionsForPerPieceSlide]
+        newFoodNameSuggestions.splice(removeIdx, 1)
+        setFoodNameSuggestionsForPerPieceSlide(newFoodNameSuggestions)
     }
 
     function clearData(){
@@ -158,9 +232,9 @@ export default function App() {
         }, 100)
     }
 
-    function handleSuggestionClick(suggestionText, id){
+    function handleSuggestionClick(suggestionText, id, isPer100gSlideActive){
         const event = {target:{name:'name', value:suggestionText, id:id}}
-        handlePer100gSlideValueChange(event)
+        isPer100gSlideActive ? handlePer100gSlideValueChange(event) : handlePerPieceSlideValueChange(event)
     }
 
     function getCurrentDayTime(){
@@ -251,11 +325,11 @@ export default function App() {
                     // store foodItems carbohydratesPer100Grams
                     localStorage.setItem(prefixedKey, JSON.stringify(value))
                     // foodNameSuggestion
-                    addNewFoodNameSuggestions(newFoodNameSuggestion)
+                    addNewFoodNameSuggestionsToPer100gSlide(newFoodNameSuggestion)
                 } else {
                     localStorage.removeItem(prefixedKey)
                     // foodNameSuggestion
-                    deleteFoodNameSuggestion(newFoodNameSuggestion)
+                    deleteFoodNameSuggestionFromPer100gSlide(newFoodNameSuggestion)
                 }
             }
             const hasNameChanged = name === 'name'
@@ -300,11 +374,11 @@ export default function App() {
                     // store foodItems carbohydratesPerPiece
                     localStorage.setItem(prefixedKey, JSON.stringify(value))
                     // foodNameSuggestion
-                        //addNewFoodNameSuggestions(newFoodNameSuggestion)
+                    addNewFoodNameSuggestionsToPerPieceSlide(newFoodNameSuggestion)
                 } else {
                     localStorage.removeItem(prefixedKey)
                     // foodNameSuggestion
-                        //deleteFoodNameSuggestion(newFoodNameSuggestion)
+                    deleteFoodNameSuggestionFromPerPieceSlide(newFoodNameSuggestion)
                 }
             }
             const hasNameChanged = name === 'name'
@@ -459,7 +533,8 @@ export default function App() {
 
             <ListSection 
                 foodItems={foodItems}
-                foodNameSuggestions={foodNameSuggestions}
+                foodNameSuggestionsForPer100gSlide={foodNameSuggestionsForPer100gSlide}
+                foodNameSuggestionsForPerPieceSlide={foodNameSuggestionsForPerPieceSlide}
                 addNewFoodItem={addNewFoodItem}
                 handleIsIntermealChange={handleIsIntermealChange}
                 handlePer100gSlideValueChange={handlePer100gSlideValueChange}

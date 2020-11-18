@@ -131,8 +131,10 @@ label{
 .clear-data-button{
     font-size: calc(var(--input-font-size) * 1.2);
     padding: 10px;
+    padding-left: 12px;
+    padding-right: 12px;
     border: 1px solid black;
-    border-radius: 3px;
+    border-radius: 8px;
     position: relative;
     /* -ms-transform: translate(0%, -50%);
     transform: translate(0%, -50%); */
@@ -220,6 +222,9 @@ label{
     display: flex;
     justify-content: center;
     align-items: center;
+
+    /* border: 0px;
+    background-color: whitesmoke; */
 }
 
 button:focus{
@@ -231,8 +236,8 @@ button:focus{
     content:"";
     background-color: black;
     position: absolute;
-    width: calc(var(--mark-size) * 0.080);
-    height: calc(var(--mark-size) * 0.8);
+    width: calc(var(--mark-size) * 0.075);
+    height: calc(var(--mark-size) * 0.75);
 }
 
 .add-new-food-item-button::after{

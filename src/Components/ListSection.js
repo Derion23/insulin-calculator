@@ -5,7 +5,8 @@ import FoodItem from './FoodItem'
 
 export default function ListSection(
     {foodItems=[], 
-    foodNameSuggestions=[],
+    foodNameSuggestionsForPer100gSlide=[],
+    foodNameSuggestionsForPerPieceSlide=[],
     addNewFoodItem, 
     handleIsIntermealChange, 
     handlePer100gSlideValueChange, 
@@ -25,7 +26,8 @@ export default function ListSection(
                     per100gSlide={element.per100gSlide}
                     perPieceSlide={element.perPieceSlide}
                     
-                    foodNameSuggestions={foodNameSuggestions}
+                    foodNameSuggestionsForPer100gSlide={foodNameSuggestionsForPer100gSlide}
+                    foodNameSuggestionsForPerPieceSlide={foodNameSuggestionsForPerPieceSlide}
                     handleIsIntermealChange={handleIsIntermealChange}
                     handlePer100gSlideValueChange={handlePer100gSlideValueChange}
                     handlePerPieceSlideValueChange={handlePerPieceSlideValueChange}
