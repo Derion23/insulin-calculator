@@ -45,7 +45,7 @@ export default function FoodItem(
         {per100gSlide.shouldDisplaySuggestions && <SuggestionList 
             allSuggestions={foodNameSuggestionsForPer100gSlide}
             searchingText={per100gSlide.name}
-            handleSuggestionClick={(suggestionText) => handleSuggestionClick(suggestionText, id)}
+            handleSuggestionClick={(suggestionText) => handleSuggestionClick(suggestionText, id, true)}
         />}
 
         <Input
@@ -86,7 +86,7 @@ export default function FoodItem(
         {perPieceSlide.shouldDisplaySuggestions && <SuggestionList 
             allSuggestions={foodNameSuggestionsForPerPieceSlide}
             searchingText={perPieceSlide.name}
-            handleSuggestionClick={(suggestionText) => handleSuggestionClick(suggestionText, id, isPer100gSlideActive)}
+            handleSuggestionClick={(suggestionText) => handleSuggestionClick(suggestionText, id, false)}
         />}
 
         <Input 
