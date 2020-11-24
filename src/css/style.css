@@ -178,16 +178,19 @@ label{
     background-color: whitesmoke;
     margin-top: 17px;
     margin-bottom: 11px;
+    margin-right: -1px;
 }
 
 .automatic-day-time-choice-button{
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
+    padding-left: 10px !important;
 }
 
 .evening-day-time-choice-button{
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
+    padding-right: 10px !important;
 }
 
 
