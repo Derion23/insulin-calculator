@@ -5,13 +5,17 @@ import Input from './Input'
 
 export default function FixedInformationSection(
     {setBloodSugar, 
+    setDayTimeChoice,
     setTargetBloodSugar, 
     setCorrectionFactor,
     setCarbohydrateFactor,
     bloodSugar, 
+    dayTimeChoice,
     targetBloodSugar, 
     correctionFactor, 
-    carbohydrateFactor
+    carbohydrateFactor,
+
+    refreshPage
     }) {
     
     return (
@@ -24,6 +28,49 @@ export default function FixedInformationSection(
                 unit = 'mg/dl'
                 onChange = {(event) => setBloodSugar(event.target.value)}
             />
+
+            <p className='center-elements day-time-choice-buttons'>
+                <button
+                    className={`automatic-day-time-choice-button 
+                    ${dayTimeChoice === 'automatic' && 'active-button'}`}
+                    onClick={() => {
+                            setDayTimeChoice('automatic')
+                            refreshPage()
+                        }
+                }
+                >Automatic</button>
+
+                <button
+                    className={`morning-day-time-choice-button 
+                    ${dayTimeChoice === 'morning' && 'active-button'}`}
+                    onClick={() => {
+                            setDayTimeChoice('morning')
+                            refreshPage()
+                        }
+                }
+                >Morgens</button>
+
+                <button
+                    className={`midday-day-time-choice-button 
+                    ${dayTimeChoice === 'midday' && 'active-button'}`}
+                    onClick={() => {
+                            setDayTimeChoice('midday')
+                            refreshPage()
+                        }
+                }
+                >Mittags</button>
+
+                <button
+                    className={`evening-day-time-choice-button 
+                    ${dayTimeChoice === 'evening' && 'active-button'}`}
+                    onClick={() => {
+                            setDayTimeChoice('evening')
+                            refreshPage()
+                        }
+                }
+                >Abends</button>
+            </p>
+
             <Input 
                 name = 'TargetBloodSugar'
                 type='number'

@@ -13,8 +13,9 @@ const PREFIX = "insulin-calculator-"
 let hasRerenderedSince60sec = false
 
 export default function App() {
+    const [dayTimeChoice, setDayTimeChoice] = useLocalStorage('dayTimeChoice', 'automatic')
     const [lastSavedData, setLastSavedData] = useLocalStorage('lastSavedData', {foodItems:[]})
-    const [foodNameSuggestions, setFoodNameSuggestions] = useLocalStorage('foodNameSuggestions', [])
+    // const [foodNameSuggestions, setFoodNameSuggestions] = useLocalStorage('foodNameSuggestions', [])
     const [foodNameSuggestionsForPer100gSlide, setFoodNameSuggestionsForPer100gSlide] = 
         useLocalStorage('foodNameSuggestions-per100gSlide', [])
 
@@ -22,9 +23,9 @@ export default function App() {
         useLocalStorage('foodNameSuggestions-perPieceSlide', [])
 
     const [bloodSugar, setBloodSugar] = useState('')
-    const [targetBloodSugar, setTargetBloodSugar] = useLocalStorage(`${getCurrentDayTime()}-targetBloodSugar`)
-    const [correctionFactor, setCorrectionFactor] = useLocalStorage(`${getCurrentDayTime()}-correctionFactor`)
-    const [carbohydrateFactor, setCarbohydrateFactor] = useLocalStorage(`${getCurrentDayTime()}-carbohydrateFactor`)
+    const [targetBloodSugar, setTargetBloodSugar] = useLocalStorage(`${getDayTime()}-targetBloodSugar`)
+    const [correctionFactor, setCorrectionFactor] = useLocalStorage(`${getDayTime()}-correctionFactor`)
+    const [carbohydrateFactor, setCarbohydrateFactor] = useLocalStorage(`${getDayTime()}-carbohydrateFactor`)
 
     const [foodItems, setFoodItems] = useLocalStorage('foodItems', [])
 
@@ -45,10 +46,10 @@ export default function App() {
             calculateIE(false, false)
         , 100) */
 
-        localStorage.removeItem(`${PREFIX}foodNameSuggestions`)
+        // localStorage.removeItem(`${PREFIX}foodNameSuggestions`)
         
-        addAllFoodItemsInLocalStorageToFoodNameSuggestionsForPer100gSlide()
-        addAllFoodItemsInLocalStorageToFoodNameSuggestionsForPerPieceSlide()
+        /* addAllFoodItemsInLocalStorageToFoodNameSuggestionsForPer100gSlide()
+        addAllFoodItemsInLocalStorageToFoodNameSuggestionsForPerPieceSlide() */
 
         // update every minute
         setInterval(() => {
@@ -59,6 +60,13 @@ export default function App() {
             
         }, 60000);
     }, [])
+
+    function getDayTime(){
+        if(dayTimeChoice === 'automatic')
+            return getCurrentDayTime()
+        else
+            return dayTimeChoice
+    }
 
     function addAllFoodItemsInLocalStorageToFoodNameSuggestionsForPer100gSlide(){
         const allFoodItemsInLocalStorage = getAllFoodItemsInLocalStorage(true)
@@ -499,8 +507,8 @@ export default function App() {
 
         setTotalIE(IE)
 
-        // needed because of async state setting
         if(shouldScroll)
+            // needed because of async state setting
             setTimeout(() => {
                 outputRef.current.scrollIntoView({smooth:true})
             }, 5)
@@ -527,13 +535,17 @@ export default function App() {
 
             <FixedInformationSection 
                 setBloodSugar={setBloodSugar}
+                setDayTimeChoice={setDayTimeChoice}
                 setTargetBloodSugar={setTargetBloodSugar}
                 setCorrectionFactor={setCorrectionFactor}
                 setCarbohydrateFactor={setCarbohydrateFactor}
                 bloodSugar={bloodSugar}
+                dayTimeChoice={dayTimeChoice}
                 targetBloodSugar={targetBloodSugar}
                 correctionFactor={correctionFactor}
                 carbohydrateFactor={carbohydrateFactor}
+
+                refreshPage={refreshPage}
             />
 
             <hr className='destop-hr new-section-hr'/>
