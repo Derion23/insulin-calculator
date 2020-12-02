@@ -15,6 +15,7 @@
     --border-color-destop: rgba(163, 163, 163, 0.507);
     --margin-destop: 12px;
     --margin-left-destop: 16px;
+    --destop-width: 650px;
 }
 
 body{
@@ -271,12 +272,12 @@ button:focus{
 }
 
 
-@media only screen and (min-width: 700px) {
+@media only screen and (min-width: 670px) {
     body {
         margin-top: 30px;
         margin-bottom: 30px;
         margin-left: 180px;
-        width: 650px;
+        width: var(--destop-width);
         border: 1px solid var(--border-color-destop);
         border-radius: 7px;
     }
@@ -309,5 +310,12 @@ button:focus{
         margin-top: 0px;
         margin-bottom: 0;
     }
+
+    @media only screen and (max-width: 1010px) {
+        body{
+            margin-left: calc((100% - 650px) / 2)
+        }
+    }
 }
+
 

@@ -10,12 +10,12 @@ import useLocalStorage from './hooks/useLocalStorage.js'
 
 const PREFIX = "insulin-calculator-"
 
-let hasRerenderedSince60sec = false
+
+let lastDayTime = ''
 
 export default function App() {
     const [dayTimeChoice, setDayTimeChoice] = useLocalStorage('dayTimeChoice', 'automatic')
     const [lastSavedData, setLastSavedData] = useLocalStorage('lastSavedData', {foodItems:[]})
-    // const [foodNameSuggestions, setFoodNameSuggestions] = useLocalStorage('foodNameSuggestions', [])
     const [foodNameSuggestionsForPer100gSlide, setFoodNameSuggestionsForPer100gSlide] = 
         useLocalStorage('foodNameSuggestions-per100gSlide', [])
 
@@ -35,29 +35,17 @@ export default function App() {
     const [totalIntermealKE, setTotalIntermealKE] = useState('')
     const [totalMainMealKE, setTotalMainMealKE] = useState('')
 
+
     const outputRef = useRef()
 
     useEffect(() => {
-        /* setFoodItems( correctFoodItems(foodItems) )
-        setLastSavedData( correctLastSavedData() ) */
-
-        // not working has some old state of foodItems even if the state has changed
-        /* setTimeout(() => 
-            calculateIE(false, false)
-        , 100) */
-
-        // localStorage.removeItem(`${PREFIX}foodNameSuggestions`)
-        
-        /* addAllFoodItemsInLocalStorageToFoodNameSuggestionsForPer100gSlide()
-        addAllFoodItemsInLocalStorageToFoodNameSuggestionsForPerPieceSlide() */
+        lastDayTime = getCurrentDayTime()
 
         // update every minute
         setInterval(() => {
-            if(!hasRerenderedSince60sec)
+            if(lastDayTime !== getCurrentDayTime()){
                 refreshPage()
-            else
-                hasRerenderedSince60sec = false
-            
+            }
         }, 60000);
     }, [])
 
@@ -68,88 +56,13 @@ export default function App() {
             return dayTimeChoice
     }
 
-    function addAllFoodItemsInLocalStorageToFoodNameSuggestionsForPer100gSlide(){
-        const allFoodItemsInLocalStorage = getAllFoodItemsInLocalStorage(true)
-
-        addNewFoodNameSuggestionsToPer100gSlide(allFoodItemsInLocalStorage)
-    }
-
-    function addAllFoodItemsInLocalStorageToFoodNameSuggestionsForPerPieceSlide(){
-        const allFoodItemsInLocalStorage = getAllFoodItemsInLocalStorage(false)
-
-        addNewFoodNameSuggestionsToPerPieceSlide(allFoodItemsInLocalStorage)
-    }
-
-    function getAllFoodItemsInLocalStorage(isPer100gSlide=true){
-        const everyKey = Object.keys(localStorage)
-        const allFoodItemKeysInLocalStorage = []
-        
-        for(const key of everyKey){
-            const wordsInKey = key.split('-')
-            if(wordsInKey.length < 4) continue
-    
-            const hasCorrectPrefix = `${PREFIX}foodItem` === `${wordsInKey[0]}-${wordsInKey[1]}-${wordsInKey[2]}` &&
-                (isPer100gSlide ? 
-                    wordsInKey[4] === 'carbohydratesPer100Grams' : wordsInKey[4] === 'carbohydratesPerPiece')
-
-            if(hasCorrectPrefix){
-                const foodItemKey = capitalize(wordsInKey[3])
-                allFoodItemKeysInLocalStorage.push(foodItemKey)
-            }
-        }
-        return allFoodItemKeysInLocalStorage
-    }
-    
-
-    function prefillFoodNameSuggestionsForPer100gSlide(){
-        const prefixedKey = `${PREFIX}foodNameSuggestions`
-        const jsonValue = localStorage.getItem(prefixedKey)
-
-        if(jsonValue == null) return
-
-        const value = JSON.parse(jsonValue)
-        setFoodNameSuggestionsForPer100gSlide(value)
-    }
-
-    /* function correctFoodItems(foodItemsArg){
-        const newFoodItems = foodItemsArg.map(foodItem => {
-            if(foodItem.slide1 == null) return foodItem
-
-            let {
-                activeSlideIdx:isPer100gSlideActive,
-                slide1:per100gSlide,
-                slide2:perPieceSlide 
-            } = foodItem
-            
-            delete foodItem.slide1
-            delete foodItem.slide2
-            delete foodItem.activeSlideIdx
-
-            isPer100gSlideActive = isPer100gSlideActive === 1
-            
-            return {
-                ...foodItem,
-                isPer100gSlideActive: isPer100gSlideActive,
-                per100gSlide: per100gSlide,
-                perPieceSlide: perPieceSlide
-            }
-        })
-        return newFoodItems
-    }
-
-    function correctLastSavedData(){
-        const newLastSavedData = {foodItems: correctFoodItems(lastSavedData.foodItems)}
-        return newLastSavedData
-    } */
-
-
     function refreshPage(){
         window.location.reload();
     }
 
     function handleSlideChange(id, isPer100gSlideActive){
         const newFoodItems = foodItems.map(foodItem => {
-            if(id == foodItem.id){
+            if(id === foodItem.id){
                 return {...foodItem, isPer100gSlideActive:  isPer100gSlideActive}
             }
             
@@ -295,7 +208,7 @@ export default function App() {
     function deleteFoodItem(id){
         let removeIdx
         for(let idx = 0; idx < foodItems.length; idx++){
-            if(id == foodItems[idx].id){
+            if(id === foodItems[idx].id){
                 removeIdx = idx
                 break
             }
@@ -307,12 +220,15 @@ export default function App() {
     }
 
     function handlePer100gSlideValueChange(event){
-        const {name, value, id} = event.target
+        const {name, value} = event.target
+
+        let {id} = event.target
+        id = toNumberFormat(id)
 
         if(value[value.length - 1] === '-') return
         const newFoodItems = foodItems.map(foodItem => {
             // would not work with !==
-            if(id != foodItem.id) return foodItem
+            if(id !== foodItem.id) return foodItem
         
             // getting the carbohydratesPer100Grams with the name from localStorage
             // if they exist set the carbohydratesPer100Grams input value
@@ -355,13 +271,16 @@ export default function App() {
     }
 
     function handlePerPieceSlideValueChange(event){
-        const {name, value, id} = event.target
+        const {name, value} = event.target
+
+        let {id} = event.target
+        id = toNumberFormat(id)
 
         if(value[value.length - 1] === '-') return
 
         const newFoodItems = foodItems.map(foodItem => {
             // would not work with !==
-            if(id != foodItem.id) return foodItem
+            if(id !== foodItem.id) return foodItem
         
             // getting the carbohydratesPerPiece with the name from localStorage
             // if they exist set the carbohydratesPerPiece input value
@@ -405,7 +324,7 @@ export default function App() {
 
     function handleIsIntermealChange(id, activeSlideIdx){
         const newFoodItems = foodItems.map(foodItem => {
-            if(id == foodItem.id){
+            if(id === foodItem.id){
                 if(activeSlideIdx === 1){
                     const per100gSlide = {...foodItem.per100gSlide, isIntermeal: !foodItem.per100gSlide.isIntermeal}
                     return {...foodItem, per100gSlide:per100gSlide}
@@ -421,6 +340,7 @@ export default function App() {
     }
 
     function toNumberFormat(string){
+        if(typeof string === 'number') return string
         if(typeof string !== 'string') return -1
 
         let stringCopy = string.slice()
@@ -433,9 +353,6 @@ export default function App() {
         const ERROR_MESSAGE = 'ein oder mehrere Werte sind nicht gültig'
 
         function areItemsTypeofNumber(...items){
-            /* for(const item of items)
-                if(toNumberFormat(item) === -1) return false
-            return true */
             return items.every(item => toNumberFormat(item) !== -1)
         }
 
@@ -516,8 +433,6 @@ export default function App() {
     
     return (
         <div>
-            {hasRerenderedSince60sec = true}
-            
             <h1>Insulin Rechner</h1>
             <p>
                 <button

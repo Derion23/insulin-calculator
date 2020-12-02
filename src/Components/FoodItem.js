@@ -1,13 +1,7 @@
 import React from 'react'
-import {Swiper, SwiperSlide} from 'swiper/react'
-import SwiperCore, {Pagination} from 'swiper'
-import 'swiper/swiper-bundle.min.css'
-
 import '../css/style.css'
 import Input from './Input'
 import SuggestionList from './SuggestionList.js'
-
-SwiperCore.use([Pagination])
 
 export default function FoodItem(
     {id, 
@@ -107,8 +101,6 @@ export default function FoodItem(
             onChange = {(event) => handlePerPieceSlideValueChange(event)}
         />
     </>
-
-    const slides = [per100gSlideHtml, perPieceSlideHtml]
 
     return (
         <div>

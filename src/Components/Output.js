@@ -6,7 +6,7 @@ export default function Output(
     {totalIE, totalMainMealKE, totalIntermealKE, totalKE, totalCorrectionInsulin, outputRef}) {
     return (
         <div ref={outputRef}>
-            {!(totalIE === '' || totalIE == undefined || totalIE <= 0) ? 
+            {!(totalIE === '' || totalIE == null || totalIE <= 0) ? 
                 <div>
                     <hr />
 
