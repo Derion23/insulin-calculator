@@ -4,9 +4,9 @@
 }
 
 :root{
-    --add-food-item-cell-size: 45px;
-    --delete-food-item-cell-size: 30px;
-    --mark-size: calc(var(--add-food-item-cell-size) * 0.9);
+    --add-food-item-size: 45px;
+    --delete-food-item-button-size: 30px;
+    --mark-size: calc(var(--add-food-item-size) * 0.9);
     --input-font-size: 1.15rem;
     --input-border-radius: 10px;
     --input-width: 85%;
@@ -16,10 +16,34 @@
     --margin-destop: 12px;
     --margin-left-destop: 16px;
     --destop-width: 650px;
+    --hide-suggestion-list-button-size: 20px;
 }
 
 body{
     margin: var(--body-margin);
+}
+
+.hide-suggestion-list-button{
+    margin: 0;
+    float: right;
+    position: relative;
+    width: var(--hide-suggestion-list-button-size);
+    height: var(--hide-suggestion-list-button-size);
+    background-color: transparent;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1rem;
+}
+
+.hide-suggestion-list-button::before,
+.hide-suggestion-list-button::after{
+    content:"";
+    background-color: rgb(146, 146, 146);
+    position: absolute;
+    width: calc(var(--hide-suggestion-list-button-size) * 0.09);
+    height: calc(var(--hide-suggestion-list-button-size) * 0.65);
 }
 
 hr,
@@ -159,8 +183,8 @@ label{
     margin: 0;
     float: right;
     position: relative;
-    width: var(--delete-food-item-cell-size);
-    height: var(--delete-food-item-cell-size);
+    width: var(--delete-food-item-button-size);
+    height: var(--delete-food-item-button-size);
     background-color: transparent;
     border: none;
     display: flex;
@@ -225,15 +249,17 @@ label{
     content:"";
     background-color: black;
     position: absolute;
-    width: calc(var(--delete-food-item-cell-size) * 0.09);
-    height: calc(var(--delete-food-item-cell-size) * 0.65);
+    width: calc(var(--delete-food-item-button-size) * 0.09);
+    height: calc(var(--delete-food-item-button-size) * 0.65);
 }
 
-.delete-food-item-button::before{
+.delete-food-item-button::before,
+.hide-suggestion-list-button::before{
     transform: rotate(45deg);
 }
 
-.delete-food-item-button::after{
+.delete-food-item-button::after,
+.hide-suggestion-list-button::after{
     transform: rotate(-45deg);
 }
 
@@ -242,8 +268,8 @@ label{
     left: 50%;
     -ms-transform: translate(-50%, 0%);
     transform: translate(-50%, 0%);
-    width: var(--add-food-item-cell-size);
-    height: var(--add-food-item-cell-size);
+    width: var(--add-food-item-size);
+    height: var(--add-food-item-size);
     border-radius: 50%;
     border: 1px solid black;
     display: flex;

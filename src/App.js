@@ -60,6 +60,22 @@ export default function App() {
         window.location.reload();
     }
 
+    function hideSuggestionList(id, isPer100gSlideActive){
+        const newFoodItems = foodItems.map(foodItem => {
+            if(id === foodItem.id){
+                const per100gSlide = {...foodItem.per100gSlide, shouldDisplaySuggestions: false}
+                const perPieceSlide = {...foodItem.perPieceSlide, shouldDisplaySuggestions: false}
+                
+                if(isPer100gSlideActive)
+                    return {...foodItem, per100gSlide:per100gSlide}
+                else
+                    return {...foodItem, perPieceSlide:perPieceSlide}
+            }
+            return foodItem
+        })
+        setFoodItems(newFoodItems)   
+    }
+
     function handleSlideChange(id, isPer100gSlideActive){
         const newFoodItems = foodItems.map(foodItem => {
             if(id === foodItem.id){
@@ -476,6 +492,7 @@ export default function App() {
                 deleteFoodItem={deleteFoodItem}
                 handleSuggestionClick={handleSuggestionClick}
                 handleSlideChange={handleSlideChange}
+                hideSuggestionList={hideSuggestionList}
             />
 
             <p style={{marginBottom:'20px'}}>

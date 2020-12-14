@@ -16,7 +16,8 @@ export default function FoodItem(
     handlePerPieceSlideValueChange,
     deleteFoodItem,
     handleSuggestionClick,
-    handleSlideChange
+    handleSlideChange,
+    hideSuggestionList
     }) {
 
     const per100gSlideHtml = 
@@ -40,6 +41,7 @@ export default function FoodItem(
             allSuggestions={foodNameSuggestionsForPer100gSlide}
             searchingText={per100gSlide.name}
             handleSuggestionClick={(suggestionText) => handleSuggestionClick(suggestionText, id, true)}
+            hideSuggestionList={() => hideSuggestionList(id, true)}
         />}
 
         <Input
@@ -81,6 +83,7 @@ export default function FoodItem(
             allSuggestions={foodNameSuggestionsForPerPieceSlide}
             searchingText={perPieceSlide.name}
             handleSuggestionClick={(suggestionText) => handleSuggestionClick(suggestionText, id, false)}
+            hideSuggestionList={() => hideSuggestionList(id, false)}
         />}
 
         <Input 

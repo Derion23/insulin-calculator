@@ -2,7 +2,8 @@ import React from 'react'
 
 import Suggestion from './Suggestion.js'
 
-export default function SuggestionList({allSuggestions, searchingText, handleSuggestionClick}) {
+export default function SuggestionList(
+    {allSuggestions, searchingText, handleSuggestionClick, hideSuggestionList}) {
     
     const matchingSuggestions = searchingText === '' ? [] : allSuggestions.filter(suggestionText => {
         const potentialMatch = suggestionText.slice(0, searchingText.length)
@@ -12,6 +13,12 @@ export default function SuggestionList({allSuggestions, searchingText, handleSug
     return (
         <div>
             {matchingSuggestions.length !== 0 && <ul className='suggestion-list'>
+            
+                <button
+                    className='hide-suggestion-list-button'
+                    onClick={() => hideSuggestionList()}
+                ></button>
+
                 {matchingSuggestions.map(suggestionText => <Suggestion 
                     key={Math.random()} 
                     suggestionText={suggestionText} 
