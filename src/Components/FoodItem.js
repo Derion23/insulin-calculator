@@ -5,6 +5,7 @@ import SuggestionList from './SuggestionList.js'
 
 export default function FoodItem(
     {id, 
+    foodItemKE,
     isPer100gSlideActive=true,
     per100gSlide={},
     perPieceSlide={},
@@ -60,6 +61,11 @@ export default function FoodItem(
             value = {per100gSlide.carbohydratesPer100Grams}
             onChange = {(event) => handlePer100gSlideValueChange(event)}
         />
+
+        {foodItemKE !== '' && 
+            <label
+                className='food-item-ke-label'
+            >{`${foodItemKE} KE`}</label>}
     </>
 
     const perPieceSlideHtml = 

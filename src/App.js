@@ -203,19 +203,20 @@ export default function App() {
             key: Math.random(),
             id: id,
             isPer100gSlideActive: true,
+            foodItemKE: '',
             per100gSlide: {
                 name: '',
                 grams: '',
                 carbohydratesPer100Grams: '',
                 isIntermeal: false,
-                shouldDisplaySuggestions: true
+                shouldDisplaySuggestions: true,
             },
             perPieceSlide: {
                 name: '',
                 numberOfPieces: '',
                 carbohydratesPerPiece: '',
                 isIntermeal: false,
-                shouldDisplaySuggestions: true
+                shouldDisplaySuggestions: true,
             }
         }]
         setFoodItems(newFoodItems)
@@ -415,9 +416,11 @@ export default function App() {
 
         // total KE | totalIntermealKE
         let KE = 0, intermealKE = 0
+        const foodItemKEList = []
         for(const foodItem of foodItems){
             const foodItemKE = calculateKE(foodItem)
             KE += foodItemKE
+            foodItemKEList.push(foodItemKE)
             if(foodItem.isPer100gSlideActive)
                 intermealKE += foodItem.per100gSlide.isIntermeal ? foodItemKE : 0
             else
@@ -426,6 +429,12 @@ export default function App() {
         setTotalKE(Math.round(KE * 10) / 10)
         setTotalIntermealKE(Math.round(intermealKE * 10) / 10)
         setTotalMainMealKE(Math.round((KE - intermealKE) * 10) / 10)
+        const newFoodItems = foodItems.map((foodItem, index) => {
+            const foodItemKE = Math.round(foodItemKEList[index] * 10) / 10
+            const newFoodItem = {...foodItems[index], foodItemKE: foodItemKE}
+            return newFoodItem
+        })
+        setFoodItems(newFoodItems)
         
         // total IE
         if(!areItemsTypeofNumber(carbohydrateFactor)) {
