@@ -23,7 +23,6 @@ export default function ListSection(
                 <FoodItem 
                     key={element.key}
                     id={element.id}
-                    foodItemKE={element.foodItemKE}
                     isPer100gSlideActive={element.isPer100gSlideActive}
                     per100gSlide={element.per100gSlide}
                     perPieceSlide={element.perPieceSlide}

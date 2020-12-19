@@ -203,11 +203,11 @@ export default function App() {
             key: Math.random(),
             id: id,
             isPer100gSlideActive: true,
-            foodItemKE: '',
             per100gSlide: {
                 name: '',
                 grams: '',
                 carbohydratesPer100Grams: '',
+                KE: '',
                 isIntermeal: false,
                 shouldDisplaySuggestions: true,
             },
@@ -215,6 +215,7 @@ export default function App() {
                 name: '',
                 numberOfPieces: '',
                 carbohydratesPerPiece: '',
+                KE: '',
                 isIntermeal: false,
                 shouldDisplaySuggestions: true,
             }
@@ -431,7 +432,15 @@ export default function App() {
         setTotalMainMealKE(Math.round((KE - intermealKE) * 10) / 10)
         const newFoodItems = foodItems.map((foodItem, index) => {
             const foodItemKE = Math.round(foodItemKEList[index] * 10) / 10
-            const newFoodItem = {...foodItems[index], foodItemKE: foodItemKE}
+
+            let newFoodItem
+            if(foodItem.isPer100gSlideActive)
+                newFoodItem = {...foodItem, per100gSlide: { 
+                    ...foodItem.per100gSlide, KE: foodItemKE}}
+            else
+                newFoodItem = {...foodItem, perPieceSlide: { 
+                    ...foodItem.perPieceSlide, KE: foodItemKE}}
+
             return newFoodItem
         })
         setFoodItems(newFoodItems)
