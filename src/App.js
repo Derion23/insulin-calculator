@@ -177,6 +177,11 @@ export default function App() {
     }
 
     function handleSuggestionClick(suggestionText, id, isPer100gSlideActive){
+        if(isPer100gSlideActive)
+            document.getElementById(`${id}-grams`).focus()
+        else
+            document.getElementById(`${id}-numberOfPieces`).focus()
+
         const event = {target:{name:'name', value:suggestionText, id:id}}
         isPer100gSlideActive ? handlePer100gSlideValueChange(event) : handlePerPieceSlideValueChange(event)
     }
@@ -241,7 +246,10 @@ export default function App() {
         const {name, value} = event.target
 
         let {id} = event.target
-        id = toNumberFormat(id)
+        if(typeof id === 'string'){
+            id = id.split('-')[0]
+            id = toNumberFormat(id)
+        }
 
         if(value[value.length - 1] === '-') return
         const newFoodItems = foodItems.map(foodItem => {
@@ -292,7 +300,10 @@ export default function App() {
         const {name, value} = event.target
 
         let {id} = event.target
-        id = toNumberFormat(id)
+        if(typeof id === 'string'){
+            id = id.split('-')[0]
+            id = toNumberFormat(id)
+        }
 
         if(value[value.length - 1] === '-') return
 

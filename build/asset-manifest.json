@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/insulin-calculator/static/css/main.e83eab5d.chunk.css",
-    "main.js": "/insulin-calculator/static/js/main.f0a6ed8b.chunk.js",
-    "main.js.map": "/insulin-calculator/static/js/main.f0a6ed8b.chunk.js.map",
+    "main.js": "/insulin-calculator/static/js/main.bdb759b5.chunk.js",
+    "main.js.map": "/insulin-calculator/static/js/main.bdb759b5.chunk.js.map",
     "runtime-main.js": "/insulin-calculator/static/js/runtime-main.019a18b3.js",
     "runtime-main.js.map": "/insulin-calculator/static/js/runtime-main.019a18b3.js.map",
     "static/js/2.e4ab7ff6.chunk.js": "/insulin-calculator/static/js/2.e4ab7ff6.chunk.js",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.019a18b3.js",
     "static/js/2.e4ab7ff6.chunk.js",
     "static/css/main.e83eab5d.chunk.css",
-    "static/js/main.f0a6ed8b.chunk.js"
+    "static/js/main.bdb759b5.chunk.js"
   ]
 }
