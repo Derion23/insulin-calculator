@@ -262,7 +262,10 @@ export default function App() {
             // getting the carbohydratesPer100Grams with the name from localStorage
             // if they exist set the carbohydratesPer100Grams input value
             if(name === 'name'){
-                scroll.scrollMore(200)
+                // scrolling
+                const inputPosY = document.getElementById(`${id}-per100gSlideName`).getBoundingClientRect().y
+                const targetPosY = 0.4 * window.innerHeight
+                scroll.scrollMore(inputPosY - targetPosY)
 
                 const prefixedKey = `${PREFIX}foodItem-${value.toLowerCase()}-carbohydratesPer100Grams`
                 const jsonValue = localStorage.getItem(prefixedKey)
@@ -319,6 +322,11 @@ export default function App() {
             // getting the carbohydratesPerPiece with the name from localStorage
             // if they exist set the carbohydratesPerPiece input value
             if(name === 'name'){
+                // scrolling
+                const inputPosY = document.getElementById(`${id}-per100gSlideName`).getBoundingClientRect().y
+                const targetPosY = 0.4 * window.innerHeight
+                scroll.scrollMore(inputPosY - targetPosY)
+
                 const prefixedKey = `${PREFIX}foodItem-${value.toLowerCase()}-carbohydratesPerPiece`
                 const jsonValue = localStorage.getItem(prefixedKey)
                 if(jsonValue != null){
