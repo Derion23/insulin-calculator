@@ -170,10 +170,6 @@ export default function App() {
         const {foodItems} = lastSavedData
 
         setFoodItems(foodItems)
-
-        setTimeout(() => {
-            calculateIE(false, false)
-        }, 100)
     }
 
     function handleSuggestionClick(suggestionText, id, isPer100gSlideActive){
@@ -485,7 +481,7 @@ export default function App() {
         if(shouldScroll)
             // needed because of async state setting
             setTimeout(() => {
-                outputRef.current.scrollIntoView({smooth:true})
+                scroll.scrollToBottom()
             }, 5)
     }
     
