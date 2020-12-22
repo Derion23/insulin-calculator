@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react'
-
+import { Link, animateScroll as scroll } from 'react-scroll'
 
 import './css/style.css'
 import FixedInformationSection from './Components/FixedInformationSection'
@@ -54,6 +54,10 @@ export default function App() {
             return getCurrentDayTime()
         else
             return dayTimeChoice
+    }
+
+    function scrollToBottom(){
+        scroll.scrollToBottom()
     }
 
     function refreshPage(){
@@ -226,6 +230,8 @@ export default function App() {
             }
         }]
         setFoodItems(newFoodItems)
+
+        scrollToBottom()
     }
 
     function deleteFoodItem(id){
