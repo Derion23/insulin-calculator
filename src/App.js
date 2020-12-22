@@ -56,10 +56,6 @@ export default function App() {
             return dayTimeChoice
     }
 
-    function scrollToBottom(){
-        scroll.scrollToBottom()
-    }
-
     function refreshPage(){
         window.location.reload();
     }
@@ -231,7 +227,9 @@ export default function App() {
         }]
         setFoodItems(newFoodItems)
 
-        scrollToBottom()
+        setTimeout(() => {
+            scroll.scrollMore(255)
+        }, 100)
     }
 
     function deleteFoodItem(id){
@@ -259,12 +257,13 @@ export default function App() {
 
         if(value[value.length - 1] === '-') return
         const newFoodItems = foodItems.map(foodItem => {
-            // would not work with !==
             if(id !== foodItem.id) return foodItem
         
             // getting the carbohydratesPer100Grams with the name from localStorage
             // if they exist set the carbohydratesPer100Grams input value
             if(name === 'name'){
+                scroll.scrollMore(200)
+
                 const prefixedKey = `${PREFIX}foodItem-${value.toLowerCase()}-carbohydratesPer100Grams`
                 const jsonValue = localStorage.getItem(prefixedKey)
                 if(jsonValue != null){
