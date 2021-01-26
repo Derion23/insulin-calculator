@@ -37,7 +37,9 @@ export default function FoodItem(
             description = 'Name'
             value = {per100gSlide.name}
             onChange = {(event) => handlePer100gSlideValueChange(event)}
-            onFocus = {() => scrollFoodItemUp(id, true)}
+            onFocus = {() => setTimeout(() => {
+                scrollFoodItemUp(id, true)
+            }, 1000) }
         />
         {per100gSlide.shouldDisplaySuggestions && <SuggestionList 
             allSuggestions={foodNameSuggestionsForPer100gSlide}
@@ -85,9 +87,7 @@ export default function FoodItem(
             description = 'Name'
             value = {perPieceSlide.name}
             onChange = {(event) => handlePerPieceSlideValueChange(event)}
-            onFocus = {() => setTimeout(() =>{
-                scrollFoodItemUp(id, false)
-            }, 1000)}
+            onFocus = {() => scrollFoodItemUp(id, false, true)}
         />
         {perPieceSlide.shouldDisplaySuggestions && <SuggestionList 
             allSuggestions={foodNameSuggestionsForPerPieceSlide}
