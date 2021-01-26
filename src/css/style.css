@@ -4,7 +4,7 @@
 }
 
 :root{
-    --add-food-item-size: 45px;
+    --add-food-item-size: 50px;
     --delete-food-item-button-size: 30px;
     --mark-size: calc(var(--add-food-item-size) * 0.9);
     --input-font-size: 1.15rem;
@@ -289,6 +289,7 @@ label{
 button:focus{
     outline: none
 }
+
 
 .add-new-food-item-button::before, 
 .add-new-food-item-button::after{

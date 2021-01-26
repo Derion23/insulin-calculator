@@ -60,8 +60,7 @@ export default function App() {
     }
 
     function scrollFoodItemUp(id, isPer100gSlideActive){
-        const foodItemId = isPer100gSlideActive ? `${id}-per100gSlideName` : `${id}-perPieceSlideName`
-        console.log(id, isPer100gSlideActive)
+        const foodItemId = isPer100gSlideActive ? `${id}-per100gSlideName` : `${id}-perPieceSlideName`  
         const inputPosY = document.getElementById(foodItemId).getBoundingClientRect().y
         const targetPosY = 0.45 * window.innerHeight
         scroll.scrollMore(inputPosY - targetPosY)
