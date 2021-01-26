@@ -39,7 +39,7 @@ export default function FoodItem(
             onChange = {(event) => handlePer100gSlideValueChange(event)}
             onFocus = {() => setTimeout(() => {
                 scrollFoodItemUp(id, true)
-            }, 100) }
+            }, 150) }
         />
         {per100gSlide.shouldDisplaySuggestions && <SuggestionList 
             allSuggestions={foodNameSuggestionsForPer100gSlide}
