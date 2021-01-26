@@ -10,7 +10,6 @@ import useLocalStorage from './hooks/useLocalStorage.js'
 
 const PREFIX = "insulin-calculator-"
 
-
 let lastDayTime = ''
 
 export default function App() {
@@ -58,6 +57,14 @@ export default function App() {
 
     function refreshPage(){
         window.location.reload();
+    }
+
+    function scrollFoodItemUp(id, isPer100gSlideActive){
+        const foodItemId = isPer100gSlideActive ? `${id}-per100gSlideName` : `${id}-perPieceSlideName`
+        console.log(id, isPer100gSlideActive)
+        const inputPosY = document.getElementById(foodItemId).getBoundingClientRect().y
+        const targetPosY = 0.45 * window.innerHeight
+        scroll.scrollMore(inputPosY - targetPosY)
     }
 
     function hideSuggestionList(id, isPer100gSlideActive){
@@ -258,10 +265,7 @@ export default function App() {
             // getting the carbohydratesPer100Grams with the name from localStorage
             // if they exist set the carbohydratesPer100Grams input value
             if(name === 'name'){
-                // scrolling
-                const inputPosY = document.getElementById(`${id}-per100gSlideName`).getBoundingClientRect().y
-                const targetPosY = 0.4 * window.innerHeight
-                scroll.scrollMore(inputPosY - targetPosY)
+                scrollFoodItemUp(id, true)
 
                 const prefixedKey = `${PREFIX}foodItem-${value.toLowerCase()}-carbohydratesPer100Grams`
                 const jsonValue = localStorage.getItem(prefixedKey)
@@ -318,11 +322,8 @@ export default function App() {
             // getting the carbohydratesPerPiece with the name from localStorage
             // if they exist set the carbohydratesPerPiece input value
             if(name === 'name'){
-                // scrolling
-                const inputPosY = document.getElementById(`${id}-perPieceSlideName`).getBoundingClientRect().y
-                const targetPosY = 0.45 * window.innerHeight
-                scroll.scrollMore(inputPosY - targetPosY)
-
+                scrollFoodItemUp(id, false)
+                
                 const prefixedKey = `${PREFIX}foodItem-${value.toLowerCase()}-carbohydratesPerPiece`
                 const jsonValue = localStorage.getItem(prefixedKey)
                 if(jsonValue != null){
@@ -531,6 +532,7 @@ export default function App() {
                 handleSuggestionClick={handleSuggestionClick}
                 handleSlideChange={handleSlideChange}
                 hideSuggestionList={hideSuggestionList}
+                scrollFoodItemUp={scrollFoodItemUp}
             />
 
             <p style={{marginBottom:'20px'}}>

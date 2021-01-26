@@ -17,7 +17,8 @@ export default function FoodItem(
     deleteFoodItem,
     handleSuggestionClick,
     handleSlideChange,
-    hideSuggestionList
+    hideSuggestionList,
+    scrollFoodItemUp
     }) {
 
     const per100gSlideHtml = 
@@ -36,6 +37,7 @@ export default function FoodItem(
             description = 'Name'
             value = {per100gSlide.name}
             onChange = {(event) => handlePer100gSlideValueChange(event)}
+            onFocus = {() => scrollFoodItemUp(id, true)}
         />
         {per100gSlide.shouldDisplaySuggestions && <SuggestionList 
             allSuggestions={foodNameSuggestionsForPer100gSlide}
@@ -83,6 +85,7 @@ export default function FoodItem(
             description = 'Name'
             value = {perPieceSlide.name}
             onChange = {(event) => handlePerPieceSlideValueChange(event)}
+            onFocus = {() => scrollFoodItemUp(id, false)}
         />
         {perPieceSlide.shouldDisplaySuggestions && <SuggestionList 
             allSuggestions={foodNameSuggestionsForPerPieceSlide}

@@ -14,7 +14,8 @@ export default function ListSection(
     deleteFoodItem,
     handleSuggestionClick,
     handleSlideChange,
-    hideSuggestionList
+    hideSuggestionList,
+    scrollFoodItemUp
     }) {
     return (
         <div>
@@ -36,6 +37,7 @@ export default function ListSection(
                     handleSuggestionClick={handleSuggestionClick}
                     handleSlideChange={handleSlideChange}
                     hideSuggestionList={hideSuggestionList}
+                    scrollFoodItemUp={scrollFoodItemUp}
              />)}
              
             <p>
