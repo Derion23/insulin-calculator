@@ -6,7 +6,7 @@ export default function Output(
     {totalIE, totalMainMealKE, totalIntermealKE, totalKE, totalCorrectionInsulin, outputRef}) {
     return (
         <div ref={outputRef}>
-            {!(totalIE === '' || totalIE == null || totalIE <= 0) ? 
+            {!(totalIE === '' || totalIE == null) ? 
                 <div>
                     <hr />
 
@@ -18,6 +18,7 @@ export default function Output(
                             Gesamt-KE: {totalKE} KE <br />
                             <br />
                             Korrektur-Insulin: {totalCorrectionInsulin} IE  <br />
+                            Sport-Insulin: {0} IE  <br />
                             <span style={{fontWeight: 'bold'}}> Gesamt-Insulin: {totalIE} IE </span>
                         </p>
                             
