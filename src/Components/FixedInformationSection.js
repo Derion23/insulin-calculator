@@ -36,7 +36,7 @@ export default function FixedInformationSection({
             setDayTimeChoice('automatic')
             refreshPage()
           }}>
-          Automatic
+          Auto
         </button>
 
         <button
