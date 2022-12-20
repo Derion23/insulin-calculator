@@ -35,6 +35,7 @@ export default function FixedInformationSection({
         type='number'
         value={sportsIE}
         description='Sport-IE'
+        unit='IE'
         onChange={event => setSportsIE(event.target.value)}
       />
 
