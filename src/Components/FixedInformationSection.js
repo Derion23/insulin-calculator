@@ -5,11 +5,14 @@ import Input from './Input'
 
 export default function FixedInformationSection({
   setBloodSugar,
+  setSportsIE,
   setDayTimeChoice,
   setTargetBloodSugar,
   setCorrectionFactor,
   setCarbohydrateFactor,
+
   bloodSugar,
+  sportsIE,
   dayTimeChoice,
   targetBloodSugar,
   correctionFactor,
@@ -26,6 +29,13 @@ export default function FixedInformationSection({
         description='Blutzucker'
         unit='mg/dl'
         onChange={event => setBloodSugar(event.target.value)}
+      />
+      <Input
+        name='SportsIE'
+        type='number'
+        value={sportsIE}
+        description='Sport-IE'
+        onChange={event => setSportsIE(event.target.value)}
       />
 
       <p className='center-elements day-time-choice-buttons'>

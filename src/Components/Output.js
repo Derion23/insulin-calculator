@@ -3,7 +3,7 @@ import React from 'react'
 import '../css/style.css'
 
 export default function Output(
-    {totalIE, totalMainMealKE, totalIntermealKE, totalKE, totalCorrectionInsulin, outputRef}) {
+    {totalIE, totalMainMealKE, totalIntermealKE, totalKE, totalCorrectionInsulin, sportsIE, outputRef}) {
     return (
         <div ref={outputRef}>
             {!(totalIE === '' || totalIE == null) ? 
@@ -18,7 +18,7 @@ export default function Output(
                             Gesamt-KE: {totalKE} KE <br />
                             <br />
                             Korrektur-Insulin: {totalCorrectionInsulin} IE  <br />
-                            Sport-Insulin: {0} IE  <br />
+                            Sport-Insulin: {sportsIE} IE  <br />
                             <span style={{fontWeight: 'bold'}}> Gesamt-Insulin: {totalIE} IE </span>
                         </p>
                             
