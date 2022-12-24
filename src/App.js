@@ -31,6 +31,7 @@ export default function App() {
   ] = useLocalStorage('foodNameSuggestions-perPieceSlide', [])
 
   const [bloodSugar, setBloodSugar] = useState('')
+  const [sportsIE, setSportsIE] = useState('')
   const [targetBloodSugar, setTargetBloodSugar] = useLocalStorage(
     `${getDayTime()}-targetBloodSugar`
   )
@@ -605,11 +606,13 @@ export default function App() {
 
       <FixedInformationSection
         setBloodSugar={setBloodSugar}
+        setSportsIE={setSportsIE}
         setDayTimeChoice={setDayTimeChoice}
         setTargetBloodSugar={setTargetBloodSugar}
         setCorrectionFactor={setCorrectionFactor}
         setCarbohydrateFactor={setCarbohydrateFactor}
         bloodSugar={bloodSugar}
+        sportsIE={toNumberFormat(sportsIE)}
         dayTimeChoice={dayTimeChoice}
         targetBloodSugar={targetBloodSugar}
         correctionFactor={correctionFactor}
@@ -652,6 +655,7 @@ export default function App() {
         totalIntermealKE={totalIntermealKE}
         totalKE={totalKE}
         totalCorrectionInsulin={totalCorrectionInsulin}
+        sportsIE={0}
         outputRef={outputRef}
       />
     </div>
