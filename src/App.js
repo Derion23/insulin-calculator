@@ -31,7 +31,8 @@ export default function App() {
   ] = useLocalStorage('foodNameSuggestions-perPieceSlide', [])
 
   const [bloodSugar, setBloodSugar] = useState('')
-  const [sportsKE, setSportsKE] = useState('')
+  const [sportsKE, setSportsKE] = useState('')      // Eingabe
+  const [sportsIE, setSportsIE] = useState('')      // Ausgabe
 
   const [targetBloodSugar, setTargetBloodSugar] = useLocalStorage(
     `${getDayTime()}-targetBloodSugar`
@@ -506,14 +507,24 @@ export default function App() {
       }
     }
 
+    function calculateSportsInsulin(sportsKE) {
+      if (!areItemsTypeofNumber(sportsKE)) {
+        if (sportsKE !== '' && shouldDisplayError) alert(ERROR_MESSAGE)
+        return 0
+      }
+      const sportsIE = -toNumberFormat(sportsKE) * toNumberFormat(carbohydrateFactor)
+      return sportsIE
+    }
+
+    const sportsInsulin = calculateSportsInsulin(sportsKE)
+    setSportsIE(Math.round(sportsInsulin * 10) / 10)
+
     function calculateCorrectionInsulin(
       bloodSugar,
       targetBloodSugar,
       correctionFactor
     ) {
-      if (
-        !areItemsTypeofNumber(bloodSugar, targetBloodSugar, correctionFactor)
-      ) {
+      if (!areItemsTypeofNumber(bloodSugar, targetBloodSugar, correctionFactor)) {
         if (bloodSugar !== '' && shouldDisplayError) alert(ERROR_MESSAGE)
         return 0
       }
@@ -579,6 +590,7 @@ export default function App() {
 
     let IE = KE * toNumberFormat(carbohydrateFactor)
     IE += correctionInsulin
+    IE += sportsInsulin;
     IE = Math.round(IE * 10) / 10
 
     setTotalIE(IE)
@@ -613,7 +625,7 @@ export default function App() {
         setCorrectionFactor={setCorrectionFactor}
         setCarbohydrateFactor={setCarbohydrateFactor}
         bloodSugar={bloodSugar}
-        sportsKE={toNumberFormat(sportsKE)}
+        sportsKE={sportsKE}
         dayTimeChoice={dayTimeChoice}
         targetBloodSugar={targetBloodSugar}
         correctionFactor={correctionFactor}
@@ -656,7 +668,7 @@ export default function App() {
         totalIntermealKE={totalIntermealKE}
         totalKE={totalKE}
         totalCorrectionInsulin={totalCorrectionInsulin}
-        sportsIE={0}
+        sportsIE={sportsIE}
         outputRef={outputRef}
       />
     </div>

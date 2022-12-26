@@ -34,8 +34,8 @@ export default function FixedInformationSection({
         name='sportsKE'
         type='number'
         value={sportsKE.toString()}
-        description='Sport-IE'
-        unit='IE'
+        description='Sport-KE'
+        unit='KE'
         onChange={event => setSportsKE(event.target.value)}
       />
 
